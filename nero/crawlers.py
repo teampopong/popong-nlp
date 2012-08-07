@@ -17,7 +17,7 @@ URL = '''http://en.wikipedia.org/w/index.php?title=List_of_Korean_family_names''
 
 def getlastnames(url=URL):
     xpaths = getxpaths(url)
-    printjson('asdf.json', xpaths)
+    printjson('koreanlastnames.json', xpaths)
     #l = list(chunklist(table, settings["N_COLUMNS"]))
     return xpaths
 

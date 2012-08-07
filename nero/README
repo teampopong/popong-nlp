@@ -1,0 +1,13 @@
+1. crawlers.py
+	- gets last names from en.wikipedia.org
+	- is not used
+
+2. romanize.py
+	- use this file to romanize names and parties
+	- names:
+		- ex: romanize.name2eng('박근혜')
+	- parties:
+		- ex: romanize.party2eng('새누리당')
+
+3. utils.py
+	- methods used in romanize.py

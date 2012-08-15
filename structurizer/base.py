@@ -1,86 +1,92 @@
 #! /usr/bin/python3
 # -*- coding: utf-8 -*-
 
-'''
-This is a library to structurize short free texts 
-written in the Korean language
-'''
+"""
+This is a library to structurize 
+short free texts written in the Korean language.
 
-import json, re, os
+[Params]
+ - fieldname:
+    votenum, district, elected, name_kr, voterate, name_cn, 
+    experience, sex, birthyear, job, party, assembly_no, education
+
+ - opt:
+    Integer in [1,82] || String in {'all', 'test'}
+"""
+
+import re, os, json 
 from pprint import pprint
 from collections import Counter
+from glob import glob
+
+import utils
+
 
 settings = {
-    'DIR': '''../../crawlers/election_commission/data/''', #base_directory
+    'DIR': '''../../crawlers/election_commission/data/''',
     'MAX_PRINT': 30,
-    'MAX_ELECTIONS': 20
+    'MAX_ELECTIONS': 20,
+    'DELIMS': '[ .,()0-9]'
     }
 
-def main():
-    '''
-    l = get_filenames()
-    pprint(l)
-    # '''   
-    
-    edu, files = get_rawlist('education', 'all')
-    #edu, files = get_rawlist('party', 'all')
-    #print(edu)
-    #print(files)
+def test(fieldname, nprint, flatten, opt):
 
-    print('n(items)\t: '+ str(len(edu)))
-    print('n(files)\t: '+ str(len(files)))
+    def printer():
+        print('\n===' + fieldname.upper() + '===')
+        print_filenames(opt)
+        print('n(files)\t: '+ str(len(filenames)))
+        print('n(items)\t: '+ str(len(fieldlist)))
+        print('n(words)\t: '+ str(len(wordlist)))
+        pprint(cnt.most_common(nprint))
 
-    wordlist = flatten_list(list_parser(edu))
-    #print(wordlist)
-
-    word_counter(wordlist)
-
-def get_rawlist(fieldname, opt='test'):
-    '''
-    Get list for a specific fieldname from 'people'.
-
-    [Params]
-         - Fieldnames:
-            votenum, district, elected, name_kr, voterate, name_cn, 
-            experience, sex, birthyear, job, party, assembly_no, education
-         - opt:
-            Integer in [1,82] || String in {'all', 'test'}
-    '''
-
-    files = get_filenames()
-
-    if isinstance(opt, int):
-        files = [files[opt]]
-    elif isinstance(opt, str):
-        if opt == 'all':
-            pass
-        elif opt == 'test':
-            files = [files[0], files[39], files[50]]
+    def print_filenames(opt):
+        if opt != 'all':
+            print('Files:')
+            pprint(filenames)
         else:
-            raise "Error: String options should be in {'all', 'test'}"
+            pass
+           
+    filenames = get_filenames(settings["DIR"], opt)
+    fieldlist = get_rawlist(filenames, fieldname)
 
+    if flatten == 1:
+        wordlist = list_parser(fieldlist)
+        wordlist = flatten_list(wordlist)
     else:
-        raise "Error: Options should either be\
-                an integer in [1,82] or string in {'all', 'test'}"
+        wordlist = fieldlist
 
-    rawlist = [p[fieldname] for f in files for p in read_people(f)]
-    return rawlist, files
+    cnt = word_counter(wordlist)
+    printer()
 
-def get_filenames(directory=settings["DIR"]):
-    ELECTION_TYPE = ['assembly', 'mayor', 'president']
-    ELECTION_RESULT = ['candidates', 'elected']
-    ELECTION_NO = [str(n) for n in range(settings["MAX_ELECTIONS"])] 
-    FILE_TYPE = '.json'
+def get_filenames(directory, opt='all'):
 
-    filenames = []
-    for t in ELECTION_TYPE:
-        for r in ELECTION_RESULT:
-            for n in ELECTION_NO:
-                filename = '%s%s-%s-%s%s'\
-                    % (directory, t, r, n, FILE_TYPE)
-                if os.path.exists(filename):
-                    filenames.append(filename)
+    def all_filenames(directory):
+        return glob(os.path.join(directory, '*'))
+
+    def select_filenames(filenames, opt):
+        if isinstance(opt, int):
+            filenames = [filenames[opt]]
+        elif isinstance(opt, str):
+            if opt == 'all':
+                pass
+            elif opt == 'test':
+                filenames = [filenames[0], filenames[39], filenames[50]]
+            else:
+                raise "Error: String options should be in {'all', 'test'}"
+        else:
+            raise "Error: Options should either be\
+                    an integer in [1,82] or string in {'all', 'test'}"
+        return filenames
+
+    allfilenames = all_filenames(settings['DIR'])
+    filenames = select_filenames(allfilenames, opt)
+
     return filenames
+
+def get_rawlist(filenames, fieldname):
+    rawlist = (p[fieldname] for f in filenames for p in read_people(f))
+    rawlist = flatten_list(rawlist)
+    return rawlist
 
 def read_people(filename):
     with open(filename, 'r') as f:
@@ -92,14 +98,24 @@ def word_counter(wordlist):
     cnt = Counter()
     for word in wordlist:
         cnt[word] += 1
-
-    print(cnt.most_common(settings["MAX_PRINT"]))
+    return cnt
 
 def flatten_list(listoflist):
+
+    def str2list(item):
+        if isinstance(item, str):
+            item = [item]
+        else:
+            pass
+        return item
+
+    listoflist = [str2list(item) for item in listoflist]
     return [item for sublist in listoflist for item in sublist]
 
 def list_parser(rawlist):
-    return (re.split('[ ()0-9]',item) for item in rawlist)
+    wordlist = (filter(None, re.split(settings["DELIMS"],item))\
+            for item in rawlist)
+    return wordlist
 
 if __name__ == '__main__':
-    main()
+    test()

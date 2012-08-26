@@ -11,10 +11,19 @@ def read_json(filename):
         data = json.loads(j)
     return data 
 
-def hanja2hangul(hanja):
+def read_HHdic():
     dic = read_json(HH_DICTIONARY)
-    hangul = dic[hanja]
-    return hangul
+    return dic
+
+def hanja2hangul(dic, string):
+    s = ''
+    for letter in string:
+        s = s + dic.get(letter, letter)
+    return s
+
+def get_alpha(string):
+    s = string.encode('utf-8')
+    return s.isalpha()
 
 if __name__ == '__main__':
     print(hanja2hangul('丁'))

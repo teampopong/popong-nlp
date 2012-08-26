@@ -10,7 +10,7 @@ def preprocessor(fieldlist):
     fieldlist = remove_periods(fieldlist)
     fieldlist = trans_hanja(fieldlist, dic)
     #fieldlist = trans_roman(fieldlist)
-    #fieldlist = check_parenthesis(fieldlist)
+    fieldlist = check_parenthesis(fieldlist)
 
     return list(fieldlist)
 
@@ -35,8 +35,6 @@ def trans_hanja(fieldlist, dic):
 def _check_parenthesis(item):
     s, e = item.find('('), item.find(')')
     inword, outword = item[s+1:e], item[2*s-e+1:s] 
-    print(inword)
-    print(outword)
     if inword==outword:
         item = item.replace(item[s:e+1],'')
     return item

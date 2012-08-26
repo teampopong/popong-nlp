@@ -20,6 +20,9 @@ from collections import Counter
 from glob import glob
 
 import utils
+from importer import importer
+from preprocessor import preprocessor
+from rules import apply_rules
 
 
 settings = {
@@ -31,23 +34,13 @@ settings = {
 
 def test(fieldname, nprint, flatten, opt):
 
-    def printer():
-        print('\n===' + fieldname.upper() + '===')
-        print_filenames(opt)
-        print('n(files)\t: '+ str(len(filenames)))
-        print('n(items)\t: '+ str(len(fieldlist)))
-        print('n(words)\t: '+ str(len(wordlist)))
-        pprint(cnt.most_common(nprint))
+    rawlist = importer(settings['DIR'], opt, fieldname)
+    fieldlist = preprocessor(rawlist)
+    fieldlist = apply_rules(fieldname, fieldlist)
 
-    def print_filenames(opt):
-        if opt != 'all':
-            print('Files:')
-            pprint(filenames)
-        else:
-            pass
-           
-    filenames = get_filenames(settings["DIR"], opt)
-    fieldlist = get_rawlist(filenames, fieldname)
+    tmp = list(zip(fieldlist, rawlist))
+    pprint(tmp)
+    print(len(tmp))
 
     if flatten == 1:
         wordlist = list_parser(fieldlist)
@@ -56,43 +49,10 @@ def test(fieldname, nprint, flatten, opt):
         wordlist = fieldlist
 
     cnt = word_counter(wordlist)
-    printer()
 
-def get_filenames(directory, opt='all'):
+    #pprint(cnt.most_common(nprint))
 
-    def all_filenames(directory):
-        return glob(os.path.join(directory, '*'))
-
-    def select_filenames(filenames, opt):
-        if isinstance(opt, int):
-            filenames = [filenames[opt]]
-        elif isinstance(opt, str):
-            if opt == 'all':
-                pass
-            elif opt == 'test':
-                filenames = [filenames[0], filenames[39], filenames[50]]
-            else:
-                raise "Error: String options should be in {'all', 'test'}"
-        else:
-            raise "Error: Options should either be\
-                    an integer in [1,82] or string in {'all', 'test'}"
-        return filenames
-
-    allfilenames = all_filenames(settings['DIR'])
-    filenames = select_filenames(allfilenames, opt)
-
-    return filenames
-
-def get_rawlist(filenames, fieldname):
-    rawlist = (p[fieldname] for f in filenames for p in read_people(f))
-    rawlist = flatten_list(rawlist)
-    return rawlist
-
-def read_people(filename):
-    with open(filename, 'r') as f:
-        j = f.read()
-        people = json.loads(j)
-    return people
+    return cnt
 
 def word_counter(wordlist):
     cnt = Counter()

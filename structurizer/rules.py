@@ -20,8 +20,8 @@ def education_rules(fieldlist):
     # item이 '졸'로 끝나는 경우 ' 졸업'으로 대체
     def _check_grad(item, abbrevs):
         def cng_grad(tmp):
-            if tmp.endswith('졸업'):
-                tmp = tmp.replace(tmp[-2:], ' 졸업')
+            if tmp.endswith(('졸업','수료','중퇴')):
+                tmp = tmp[:-2] + ' ' + tmp[-2:]
             if tmp.endswith('졸'):
                 if len(tmp) == 2:
                     tmp = tmp.replace(tmp[0], abbrevs.get(tmp[0],''))

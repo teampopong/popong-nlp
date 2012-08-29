@@ -3,4 +3,4 @@
 
 import base
 
-base.test('education', 30, 1, 'all')
+base.test('education', 100, 1, 'all')

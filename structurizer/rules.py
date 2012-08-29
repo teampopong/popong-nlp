@@ -7,40 +7,62 @@ def apply_rules(fieldname, fieldlist):
     return fieldlist
 
 def education_rules(fieldlist):
-    abbrevs = {'대':'대학',
-        '중':'중학교',
-        '소':'소학교',
-        '전':'전문대학',
-        '고':'고등학교',
-        '국':'국민학교',
-        '보':'보통학교',
-        '초':'초등학교',
+    abbrevs = {
+        '대졸':'대학 졸업',
+        '중졸':'중학교 졸업',
+        '소졸':'소학교 졸업',
+        '전졸':'전문대학 졸업',
+        '고졸':'고등학교 졸업',
+        '국졸':'국민학교 졸업',
+        '보졸':'보통학교 졸업',
+        '초졸':'초등학교 졸업',
+        '고보졸':'고등보통학교 졸업',
+        '대퇴':'대학 중퇴',
         }
+ 
+    delwords = ['한문수학', '한수', '한문']
 
-    # item이 '졸'로 끝나는 경우 ' 졸업'으로 대체
-    def _check_grad(item, abbrevs):
-        def cng_grad(tmp):
-            if tmp.endswith(('졸업','수료','중퇴')):
-                tmp = tmp[:-2] + ' ' + tmp[-2:]
-            if tmp.endswith('졸'):
-                if len(tmp) == 2:
-                    tmp = tmp.replace(tmp[0], abbrevs.get(tmp[0],''))
-                    #tmp = '*' + tmp
-                tmp = tmp.replace(tmp[-1], ' 졸업')
-            return tmp       
-        
-        idx = item.find('(')
-        if idx > 0:
-            tmp = cng_grad(item[:idx])
-            item = tmp + item[idx:]
-        else:
-            item = cng_grad(item)
+    # nullify
+    def _nullify(item):
+        if item in delwords:
+            item = ''
+        return item
+    
+    def nullify(fieldlist):
+        return (_nullify(item) for item in fieldlist)
+
+    # 약어 대체
+    def _replace_abbrevs(item):
+        return abbrevs.get(item, item)
+ 
+    def replace_abbrevs(fieldlist):
+        newlist = []
+        for item in fieldlist:
+            idx = item.find('(')
+            if idx > 0:
+                tmp = _replace_abbrevs(item[:idx])
+                newlist.append(tmp + item[idx:])
+            else:
+                newlist.append(_replace_abbrevs(item))
+        return newlist 
+    
+    # 졸업 여부 체크
+    def _check_grad(item):
+        if item.endswith('졸'):
+            '''
+            if len(item) == 2:
+                item = item.replace(item[:-1], abbrevs.get(item[:-1],''))
+                #item = '*' + item
+            '''
+            item = item.replace(item[-1], ' 졸업')
+
+        elif item.endswith(('졸업','수료','중퇴','제적')):
+            item = item[:-2] + ' ' + item[-2:]
 
         return item
 
-
-    def check_grad(fieldlist, abbrevs):
-        return (_check_grad(item, abbrevs) for item in fieldlist)
+    def check_grad(fieldlist):
+        return (_check_grad(item) for item in fieldlist)
 
     # item이 '미국'으로 시작하는 경우 '미국 '으로 대체
     def _check_US(item):
@@ -58,7 +80,9 @@ def education_rules(fieldlist):
         fieldlist = (_check_JP(item) for item in fieldlist)
         return fieldlist
 
-    fieldlist = check_grad(fieldlist, abbrevs)
+    fieldlist = nullify(fieldlist)
+    fieldlist = replace_abbrevs(fieldlist)
+    fieldlist = check_grad(fieldlist)
     fieldlist = check_countries(fieldlist)
 
     return fieldlist

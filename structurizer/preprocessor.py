@@ -7,7 +7,7 @@ def preprocessor(fieldlist):
     dic = utils.read_HHdic()
 
     fieldlist = nullify(fieldlist)
-    fieldlist = remove_periods(fieldlist)
+    #fieldlist = remove_periods(fieldlist)
     fieldlist = trans_hanja(fieldlist, dic)
     #fieldlist = trans_roman(fieldlist)
     fieldlist = check_parenthesis(fieldlist)

@@ -16,8 +16,8 @@ base.test('district', 100, 1, 'all')
 
 '''
 # education
-# base.test('education', 300, 1, 29) # 19대 당선자
-base.test('education', 30, 1, 'test')
+base.test('education', 300, 1, 29) # 19대 당선자
+#base.test('education', 30, 1, 'test')
 
 '''
 for e in edu:

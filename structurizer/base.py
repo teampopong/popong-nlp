@@ -97,4 +97,5 @@ def list_parser(rawlist):
     return wordlist
 
 if __name__ == '__main__':
-    test()
+    test('education', 30, flatten=1, opt='test')
+

@@ -14,7 +14,6 @@ nprint = 30
 filenames = get_filenames('../../crawlers/election_commission/data/', opt)
 fieldlist = get_rawlist(filenames, fieldname)
 wordlist = list_parser(fieldlist)
-wordlist = list(wordlist)
 wordlist = flatten_list(wordlist)
 dic = read_HHdic()
 wordlist = (hanja2hangul(dic, word) for word in wordlist)

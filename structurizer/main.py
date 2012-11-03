@@ -2,19 +2,22 @@
 # -*- coding: utf-8 -*-
 
 from base import * 
-import utils
+from utils import *
 from importer import *
 
-opt = 'test'
+from pprint import pprint 
+
+opt = 'all'
 fieldname = 'education'
-nprint = 300
+nprint = 30
 
 filenames = get_filenames('../../crawlers/election_commission/data/', opt)
 fieldlist = get_rawlist(filenames, fieldname)
 wordlist = list_parser(fieldlist)
+wordlist = list(wordlist)
 wordlist = flatten_list(wordlist)
-dic = utils.read_HHdic()
-wordlist = (utils.hanja2hangul(dic, word) for word in wordlist)
+dic = read_HHdic()
+wordlist = (hanja2hangul(dic, word) for word in wordlist)
 #wordlist = word_filter(wordlist, 1,2)
 
 cnt = word_counter(wordlist)

@@ -20,7 +20,7 @@ def education_rules(fieldlist):
         '대퇴':'대학 중퇴',
         }
  
-    delwords = ['한문수학', '한수', '한문']
+    delwords = ['한문수학','한수','한문']
 
     # nullify
     def _nullify(item):

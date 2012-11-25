@@ -14,16 +14,12 @@ from wordify import wordify
 from base import *
 
 fieldname = 'education'
-nprint = 30
-flatten =1
-opt = 'test'
+nprint = 50
+flatten = 1
+opt = 'all'
 
 settings = {
     'DIR': '''../../crawlers/election_commission/data/''',
-    'MAX_PRINT': 30,
-    'MAX_ELECTIONS': 20,
-    'DELIMS': '[^\w]',
-    'NCOLUMNS': 6
     }
 
 rawlist = importer(settings['DIR'], opt, fieldname)
@@ -42,7 +38,6 @@ birthyear = importer(settings['DIR'], opt, 'birthyear')
 name_kr = importer(settings['DIR'], opt, 'name_kr')
 tmp = list(zip(birthyear, name_kr, wordlist, rawlist))
 #tmp = list(zip(birthyear, name_kr, fieldlist, rawlist))
-pprint(tmp)
 print(len(tmp))
 
 if flatten == 1:

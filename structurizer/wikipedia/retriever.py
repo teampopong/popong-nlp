@@ -1,37 +1,26 @@
-#! /usr/bin/python2.7
+#! /usr/bin/python3
 # -*- coding: utf-8 -*-
 
 import html5lib, urllib2
 import settings, xpaths
+import json
 
 from pprint import pprint
 
-def create_category_tree(query):
-    #TODO: make tree
-    q = '서울대'
-    bone = fetch(['all'], query)
-    
-    '''
-    for c in bone['categories']:
-        print c
-        q = '분류:' + querify(c)
-        bone = fetch(['all'], q)
-        pprint(bone)
-    '''
-    return tree
+def fetch_branch(query):
+    branch = dict()
+    page = request_wiki_page(query)
+    branch['name'] = get_canonical_name(page)
+    branch['children'] = get_categories(page)
+    return branch
 
-def fetch(optlist, query):
-    bone = dict()
-    page = request_page(q)
-    for opt in optlist:
-        if opt in ['canonical','name','n','all']:
-            bone['canonical_name'] = get_canonical_name(page)
-        if opt in ['category','categories','c','all']:
-            bone['categories'] = get_categories(page)
-    return bone
- 
-def request_page(query):
-    url = settings.BASE_URL + query
+def fetch_canonical_name(query):
+    page = request_wiki_page(query)
+    name = get_canonical_name(page)
+    return name
+
+def request_wiki_page(query):
+    url = settings.WIKI_URL + query
     p = html5lib.HTMLParser(\
             tree=html5lib.treebuilders.getTreeBuilder("lxml"),\
             namespaceHTMLElements=False)
@@ -41,16 +30,13 @@ def request_page(query):
     page = p.parse(f)
     return page
 
-def querify(query):
-    encoded = query.encode('utf-8')
-    engaged = encoded.replace(' ', '_')
-    return engaged
-
 def get_canonical_name(page):
     return get_text_list(page, xpaths.CANONICAL_NAME)[0]
    
 def get_categories(page):
-    return get_text_list(page, xpaths.CATEGORIES)[2:]
+    catlist = get_text_list(page, xpaths.CATEGORIES)[2:]
+    catlist = [{"name": c} for c in catlist]
+    return catlist
 
 def get_text_list(page, x):
     elem = page.xpath(x)[0]
@@ -58,10 +44,15 @@ def get_text_list(page, x):
     return l
 
 if __name__ == '__main__':
-    '''
-    q = '서울대'
-    bone = fetch(['all'], q)
-    print(bone)
-    '''
-    tree = create_category_tree(query)
-    print tree
+    queries = [\
+            u'서울대학교',u'서울대',u'경성제대',u'경성제국대학',\
+            u'KAIST',u'카이스트',u'한국과학기술원',\
+            u'고려대',u'보성전문학교',\
+            u'법대',u'산업공학과']
+    for q in queries:
+        try:
+            branch = fetch_branch(q.encode('utf-8'))
+            canonical_name = branch['name']
+        except:
+            canonical_name = None
+        print('"%s" -> "%s"' % (q, canonical_name))

@@ -3,8 +3,9 @@
 
 import json
 import codecs
+from collections import Counter
 
-HH_DICTIONARY = 'hanja-hangul.json'
+HH_DICTIONARY = 'assets/hanja-hangul.json'
 
 def read_json(filename):
     with open(filename, 'r') as f:
@@ -32,6 +33,10 @@ def print_csv(filename, data):
             f.write(','.join(d))
             f.write('\n')
 
+def print_json(filename, data):
+    with open(filename, 'w') as f:
+        json.dump(data, f, indent=2)
+
 def prettify(wordlist):
     def right_align(_list, max_length):
         tmp_list = []
@@ -43,6 +48,23 @@ def prettify(wordlist):
     max_length = max(len(i) for i in wordlist)
     wordlist = [right_align(l, max_length) for l in wordlist]
     return wordlist
+
+def flatten_list(listoflist):
+    def str2list(item):
+        if isinstance(item, str):
+            item = [item]
+        else:
+            pass
+        return item
+
+    listoflist = [str2list(item) for item in listoflist]
+    return [item for sublist in listoflist for item in sublist]
+
+def count(text):
+    cnt = Counter()
+    for word in text:
+        cnt[word] += 1
+    return cnt
 
 if __name__ == '__main__':
     print(hanja2hangul('丁'))

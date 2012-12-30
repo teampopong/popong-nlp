@@ -1,11 +1,12 @@
-#! /usr/bin/python3
+#! /usr/bin/python2.7
 # -*- coding: utf-8 -*-
 
+from __future__ import unicode_literals
 import os, json
 from glob import glob
 from pprint import pprint
 
-def importer(directory, opt, fieldname):          
+def data_importer(directory, opt='test', fieldname='name_kr'):          
  
     def printer():
         print('\n===' + fieldname.upper() + '===')
@@ -34,6 +35,7 @@ def all_filenames(directory):
     return glob(os.path.join(directory, '*'))
 
 def select_filenames(filenames, opt):
+    opt = opt.encode('utf-8')
     if isinstance(opt, int):
         filenames = [filenames[opt]]
     elif isinstance(opt, str):
@@ -42,10 +44,9 @@ def select_filenames(filenames, opt):
         elif opt == 'test':
             filenames = [filenames[0], filenames[39], filenames[50]]
         else:
-            raise "Error: String options should be in {'all', 'test'}"
+            raise Exception # Options should be in {'all', 'test'}"
     else:
-        raise "Error: Options should either be\
-                an integer in [1,82] or string in {'all', 'test'}"
+        raise Exception # Options should either be an integer in [1,82] or string in {'all', 'test'}"
     return filenames
 
 def get_rawlist(filenames, fieldname):
@@ -58,3 +59,6 @@ def read_people(filename):
         people = json.loads(j)
     return people
 
+if __name__ == '__main__':
+    fieldlist = importer('../../crawlers/election_commission/data/')
+    print(fieldlist)

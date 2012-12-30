@@ -5,7 +5,7 @@ import json
 import codecs
 from collections import Counter
 
-HH_DICTIONARY = 'assets/hanja-hangul.json'
+HH_DICTIONARY = 'dict/hanja-hangul.json'
 
 def read_json(filename):
     with open(filename, 'r') as f:
@@ -36,6 +36,10 @@ def print_csv(filename, data):
 def print_json(filename, data):
     with open(filename, 'w') as f:
         json.dump(data, f, indent=2)
+
+def print_text(filename, data):
+    with open(filename, 'w') as f:
+        f.write(data)
 
 def prettify(wordlist):
     def right_align(_list, max_length):

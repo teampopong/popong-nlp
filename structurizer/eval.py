@@ -30,8 +30,9 @@ def perplexity():
     return p
 
 if __name__ == '__main__':
-    WORDSET = 'dict/education-wordlist.json'
-    DIC = 'dict/education.json'
+    FIELDNAME = 'party'
+    WORDSET = 'dict/%s-wordlist.json' % (FIELDNAME)
+    DIC = 'dict/%s.json' % (FIELDNAME)
 
     with open(WORDSET, 'r') as f:
         words = json.load(f)

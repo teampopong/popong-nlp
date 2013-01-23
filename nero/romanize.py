@@ -17,6 +17,6 @@ def party2eng(party):
         return u'independent'
 
     if party.endswith(u'당'):
-        party = party[:-1]
+        party = '%s Party' % party[:-1]
 
-    return romanize(party).capitalize()
+    return romanize(party).title()

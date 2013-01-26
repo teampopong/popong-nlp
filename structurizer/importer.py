@@ -6,8 +6,8 @@ import os, json
 from glob import glob
 from pprint import pprint
 
-def data_importer(directory, opt='test', fieldname='name_kr'):          
- 
+def data_importer(directory, opt='test', fieldname='name_kr'):
+
     def printer():
         print('\n===' + fieldname.upper() + '===')
         print_filenames(opt)
@@ -32,7 +32,7 @@ def get_filenames(directory, opt):
     return filenames
 
 def all_filenames(directory):
-    return glob(os.path.join(directory, '*'))
+    return glob(os.path.join(directory, '*_candidates_*.json'))
 
 def select_filenames(filenames, opt):
     opt = opt.encode('utf-8')
@@ -42,7 +42,7 @@ def select_filenames(filenames, opt):
         if opt == 'all':
             pass
         elif opt == 'test':
-            filenames = [filenames[0], filenames[39], filenames[50]]
+            filenames = [filenames[0], filenames[20], filenames[40]]
         else:
             raise Exception # Options should be in {'all', 'test'}"
     else:

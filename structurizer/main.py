@@ -8,9 +8,9 @@ from preprocessor import preprocessor
 from babylon import build_dict
 import utils
 
-INP = '../../crawlers/election_commission/data/'
-OPTION = 'all'
-FIELDNAME = 'party' # 'education', 'party'
+INP = '/Users/lucypark/data/popong/people'
+OPTION = 'test'
+FIELDNAME = 'education' # 'education', 'party'
 
 def main():
     stime = time.time()

@@ -36,6 +36,7 @@ def all_filenames(directory):
 
 def select_filenames(filenames, opt):
     opt = opt.encode('utf-8')
+    from pprint import pprint
     if isinstance(opt, int):
         filenames = [filenames[opt]]
     elif isinstance(opt, str):
@@ -43,10 +44,16 @@ def select_filenames(filenames, opt):
             pass
         elif opt == 'test':
             filenames = [filenames[0], filenames[20], filenames[40]]
+        elif opt == 'legislators':
+            filenames = filenames[:19]
+        elif opt == 'mayors':
+            filenames = filenames[19:24]
+        elif opt == 'presidents':
+            filenames = filenames[24:]
         else:
-            raise Exception # Options should be in {'all', 'test'}"
+            raise Exception # Options should be in {'all', 'test', 'legistlators', 'mayors', 'presidents'}"
     else:
-        raise Exception # Options should either be an integer in [1,82] or string in {'all', 'test'}"
+        raise Exception # Options should either be an integer in [0,40] or string in {'all', 'test', 'legistlators', 'mayors', 'presidents'}
     return filenames
 
 def get_rawlist(filenames, fieldname):

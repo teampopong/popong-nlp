@@ -2,9 +2,7 @@
 # -*- coding: utf-8 -*-
 
 # from __future__ import unicode_literals   # 'd3py' doesn't yet work with unicode!
-import re
-import numpy
-import d3py, logging, pandas
+import re, csv
 from collections import Counter
 
 from importer import get_filenames
@@ -14,45 +12,50 @@ INP = '/Users/lucypark/data/popong/people'
 FIELD = 'education'
 
 def get_files(filenames, fieldname):
-    files = {}
+    files = []
     for f in filenames:
         num = utils.find_number(f)
         data = utils.read_json(f)
         field = [d[fieldname] for d in data]
-        files[num] = field
+        files.append(field)
     return files
 
-def get_wordlengths(files):
-    wlengths = []
-    for f in files:
-        wl = []
-        for word in files[f]:
-            wl.append(len(word))
-        wlengths.append(wl)
-    return wlengths
+def parse(f):
+    return [i for item in f for i in filter(None, re.split('[ \(\)]', item))]
+
+def wordlengths(words):
+    lengths = []
+    for word in words:
+        lengths.append(len(word))
+    return lengths
+
+def count(lengths):
+    c = Counter(lengths)
+    return dict(c)
+
+def tablarize(counts):
+    ncols = max([i for c in counts for i in c.keys()])
+    table = []
+    for c in counts:
+        arr = [0] * ncols
+        for i in c.items():
+            arr[i[0]-1] = i[1]
+        print arr
+        table.append(arr)
+    return table, ncols
 
 def main():
     fnames = get_filenames(INP, 'legislators'); print "Got filenames"
     files = get_files(fnames, FIELD); print "Got files"
-    wlengths = get_wordlengths(files)
-    wl = wlengths[0]
 
-    logging.basicConfig(level=logging.DEBUG)
-    for wl in wlengths:
-        cnt, frq = numpy.histogram(wl)
+    words = [parse(f) for f in files]
+    lengths = [wordlengths(w) for w in words]
+    counts = [count(l) for l in lengths]
+    table, ncols = tablarize(counts)
 
-        df = pandas.DataFrame ({
-            # FIXME: '`'를 붙이지 않으면 "Uncaught TypeError: Object function h(a){return e(a)} has no method 'rangeBand'" 와 같은 에러 발생
-            "num": [ '`' + str(i) for i in frq[:-1] ],
-            "count": list(cnt),
-        })
-
-        i = 1
-        # with d3py.PandasFigure(df) as p:
-        p = d3py.PandasFigure(df)
-        p += d3py.Bar(x="num", y="count", fill="MediumAquamarine")
-        p += d3py.xAxis(x="num")
-        p.show()
+    headers = ['no'] + range(1,ncols+1)
+    table = [[table.index(t)+1] + t for t in table]
+    utils.write_csv('count.csv', table, headers)
 
 if __name__ == '__main__':
     main()

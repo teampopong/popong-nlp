@@ -1,8 +1,10 @@
 #! /usr/bin/python3
 # -*- coding: utf-8 -*-
 
+import re
 import json
 import codecs
+import csv
 from collections import Counter
 
 HH_DICTIONARY = 'dict/hanja-hangul.json'
@@ -11,7 +13,11 @@ def read_json(filename):
     with open(filename, 'r') as f:
         j = f.read()
         data = json.loads(j)
-    return data 
+    return data
+
+def read_text(filename):
+    with open(filename, 'r') as f:
+        return f.read()
 
 def read_HHdic():
     dic = read_json(HH_DICTIONARY)
@@ -27,11 +33,13 @@ def get_alpha(string):
     s = string.encode('utf-8')
     return s.isalpha()
 
-def print_csv(filename, data):
-    with open(filename, 'w') as f:
+def write_csv(filename, data, headers=None):
+    with open(filename, 'wb') as f:
+        w = csv.writer(f, delimiter=',', quotechar='|', quoting=csv.QUOTE_MINIMAL)
+        if headers:
+            w.writerow(headers)
         for d in data:
-            f.write(','.join(d))
-            f.write('\n')
+            w.writerow(d)
 
 def print_json(filename, data):
     with open(filename, 'w') as f:
@@ -47,7 +55,7 @@ def prettify(wordlist):
         for i in range(max_length - len(_list)):
             tmp_list.append('')
         aligned = tmp_list + _list
-        return aligned 
+        return aligned
 
     max_length = max(len(i) for i in wordlist)
     wordlist = [right_align(l, max_length) for l in wordlist]
@@ -69,6 +77,21 @@ def count(text):
     for word in text:
         cnt[word] += 1
     return cnt
+
+def textify(obj, opt=''):
+    if isinstance(obj, list):
+        if opt=='stag':
+            return '<s> ' + ' </s>\n<s> '.join(obj) + ' </s>'
+        elif opt=='filter':
+            obj = filter(None, obj)
+            return '\n'.join(obj)
+        else:
+            return '\n'.join(obj)
+    else:
+        raise ValueError
+
+def find_number(s):
+    return int(re.findall(r'[0-9]+', s)[0])
 
 if __name__ == '__main__':
     print(hanja2hangul('丁'))

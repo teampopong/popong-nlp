@@ -1,0 +1,1 @@
+/home/e9t/data/corpus/lorem-ipsum-ko.txt

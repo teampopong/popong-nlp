@@ -13,7 +13,7 @@ def main(corpus, instring):
     # get doc
     lines = open_file(corpus)
     doc = strip_n_and_merge_lines(lines)
-    
+
     # get words
     words = doc.split()
 
@@ -39,11 +39,11 @@ def main(corpus, instring):
 
     # print results
     print '\n+ Count matrix'; print tokenlist; pprint(cm)
-    print '\n+ Probability matrix'; print tokenlist; pprint(pm) 
+    print '\n+ Probability matrix'; print tokenlist; pprint(pm)
     print '\n+ Laplace matrix'; print tokenlist; pprint(lm)
     print '\n+ Turing frequencies'; print N
     '''
-         
+
 def open_file(filename):
     with open(filename, 'r') as f:
         doc = f.readlines()
@@ -75,13 +75,13 @@ def create_counter(setofwords):
     for word in setofwords:
         counter[word] = dict()
     return counter
-     
+
 def count_bigrams(counter, words):
     i = 0
     for i in range(len(words)-1):
         try:
             counter[words[i]][words[i+1]] += 1
-        except: 
+        except:
             counter[words[i]][words[i+1]] = 1
         i += 1
     return counter
@@ -97,7 +97,7 @@ def get_count_matrix(bigram_cnt, tokenlist):
                 l.append(bigram_cnt[tokenlist[i]][tokenlist[j]])
             except:
                 l.append(0)
-        L.append(l) 
+        L.append(l)
     return L
 
 def get_prob_matrix(bigram_cnt, tokenlist):
@@ -114,7 +114,7 @@ def get_prob_matrix(bigram_cnt, tokenlist):
                 l.append(n)
             except:
                 l.append(0.0)
-        L.append(l) 
+        L.append(l)
     return L
 
 def get_laplace_matrix(bigram_cnt, tokenlist, nvoca):
@@ -153,7 +153,7 @@ def calc_turing_bigrams(bigram_cnt, N):
         for nextword in bigram_cnt[word]:
             c = bigram_cnt[word][nextword]
             bigram_cnt[word][nextword] = (c+1) * N[c+2] / N[c+1]
-    return bigram_cnt 
+    return bigram_cnt
 
 if __name__ == '__main__':
-    main('data/education.txt', '<s> 서울대학교 법과대학 졸업 </s>')
+    main('../_output/education.txt', '<s> 서울대학교 법과대학 졸업 </s>')

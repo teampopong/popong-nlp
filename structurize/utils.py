@@ -7,7 +7,7 @@ import codecs
 import csv
 from collections import Counter
 
-HH_DICTIONARY = 'dict/hanja-hangul.json'
+HH_DICTIONARY = '/home/e9t/data/hanja-hangul.json'
 
 def read_json(filename):
     with open(filename, 'r') as f:
@@ -94,4 +94,5 @@ def find_number(s):
     return int(re.findall(r'[0-9]+', s)[0])
 
 if __name__ == '__main__':
-    print(hanja2hangul('丁'))
+    dic = read_HHdic()
+    print(hanja2hangul(dic, '丁'))

@@ -1,7 +1,7 @@
 #! /usr/bin/python2.7
 # -*- coding: utf-8 -*-
 
-from utils import firstname2eng, force_unicode, lastname2eng, romanize
+from base import firstname2eng, force_unicode, lastname2eng, romanize
 
 @force_unicode
 def name2eng(name):
@@ -20,3 +20,7 @@ def party2eng(party):
         party = '%s Party' % party[:-1]
 
     return romanize(party).title()
+
+if __name__=='__main__':
+    print name2eng('박근혜')
+    print party2eng('새누리당')

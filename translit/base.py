@@ -2,7 +2,6 @@
 # -*- coding: utf-8 -*-
 
 from hangul import translit
-import crawlers
 
 # List family names of (estimated population) > 50M
 # Source: http://en.wikipedia.org/w/index.php?title=List_of_Korean_family_names

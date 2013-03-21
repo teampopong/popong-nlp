@@ -2,23 +2,29 @@
 # -*- coding: utf-8 -*-
 
 from __future__ import unicode_literals
-import sys
+import sys, json
 from urllib2 import HTTPError
 import gevent
 from gevent.monkey import patch_all; patch_all()
 
-import utils
 from canonizer.wikipedia import canonical_name
+
+# FIXME: global name 'etree' not defined Error
+
+def print_json(filename, data):
+    with open(filename, 'w') as f:
+        json.dump(data, f, indent=2)
 
 def build_dict(fieldname, obj):
 
     text = textify(obj)
-    filename = 'data/%s.txt' % (fieldname)
-    utils.print_text(filename, text.encode('utf-8'))
+    filename = '_output/%s.txt' % (fieldname)
+    with open(filename, 'w') as f:
+        f.write(text.encode('utf-8'))
 
     words = unique_words(text)
-    filename = 'dict/%s-wordlist.json' % (fieldname)
-    utils.print_json(filename, words)
+    filename = '_output/%s-wordlist.json' % (fieldname)
+    print_json(filename, words)
 
     sys.stdout.write('n(unique_words)\t: ')
     print len(words)
@@ -34,9 +40,9 @@ def build_dict(fieldname, obj):
         jobs.append(job)
         i += 1
 
-    gevent.joinall(jobs)    
-    filename = 'dict/%s.json' % (fieldname)
-    utils.print_json(filename, dic)
+    gevent.joinall(jobs)
+    filename = '_output/%s.json' % (fieldname)
+    print_json(filename, dic)
 
     return dic
 
@@ -47,7 +53,7 @@ def textify(obj):
         raise ValueError
 
 def unique_words(text):
-   l = text.split() 
+   l = text.split()
    w = list(set(l))
    return w
 
@@ -60,7 +66,7 @@ def hashing(word, dic):
         print word
 
 if __name__ == '__main__':
-    print 
-    # etime - stime, "seconds" 
+    print "Good"
+    # etime - stime, "seconds"
     # education 전체로 돌렸을 때 9083 sec
     # party 전체로 돌렸을 때 82 sec

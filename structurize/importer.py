@@ -67,5 +67,6 @@ def read_people(filename):
     return people
 
 if __name__ == '__main__':
-    fieldlist = importer('../../crawlers/election_commission/data/')
-    print(fieldlist)
+    fieldlist = data_importer('/home/e9t/data/popong/people', fieldname='education')
+    for item in fieldlist:
+        print item.encode('utf-8')

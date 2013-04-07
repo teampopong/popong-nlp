@@ -1,6 +1,9 @@
 Team POPONG NLP Package
 =======================
 
+## Dependencies
+- `pip install regex unidecode`
+
 ## Packages 
 1. `main.py`
 2. `settings.py`
@@ -37,8 +40,6 @@ Team POPONG NLP Package
             - ex: romanize.name2eng('박근혜')
         - parties:
             - ex: romanize.party2eng('새누리당')
-    2. `base.py`
-        - basic methods used in `romanize.py`
 
 ### _test/
 Temporary test codes.

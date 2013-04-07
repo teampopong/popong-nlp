@@ -1,19 +1,23 @@
 #! /usr/bin/python2.7
 # -*- coding: utf-8 -*-
 
+import os.path
 import json
-from hangul import translit
+from unidecode import unidecode
 
 from base import force_unicode
 
+basepath = os.path.dirname(os.path.realpath(__file__))
+
 def get_lastnames(filename):
-    with open(filename, 'r') as f:
+    with open(os.path.join(basepath, filename), 'r') as f:
         return json.load(f)
 
 @force_unicode
 def romanize(txt):
     '''한글을 영문으로 변환'''
 
+    return unidecode(txt)
     return translit.romanize(txt.encode('utf-8')).decode('utf-8')
 
 @force_unicode

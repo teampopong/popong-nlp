@@ -6,17 +6,11 @@ import json, regex
 
 HH_DICTIONARY = '/home/e9t/data/hanja-hangul.json'
 
-if __name__ == "__main__":
+def translit(string):
     with open(HH_DICTIONARY, 'r') as f:
         dic = json.load(f)
 
-    text = '../_input/lorem-ipsum-multi.txt'
-    with open(text, 'r') as f:
-        chinese = regex.findall(ur'[\p{Han}]+', f.read().decode('utf-8'))
+    return ''.join(dic.get(char) for char in string)
 
-    import sys
-    for word in chinese:
-        hangul = ''.join([dic.get(char) for char in word])
-        print word, hangul
-
-    #print hanja2hangul('丁', dic=dic)
+if __name__ == "__main__":
+    print translit('新新新新新')

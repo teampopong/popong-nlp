@@ -1,7 +1,37 @@
 #! /usr/bin/python2.7
 # -*- coding: utf-8 -*-
 
-from base import firstname2eng, force_unicode, lastname2eng, romanize
+import json
+from hangul import translit
+
+from base import force_unicode
+
+def get_lastnames(filename):
+    with open(filename, 'r') as f:
+        return json.load(f)
+
+@force_unicode
+def romanize(txt):
+    '''한글을 영문으로 변환'''
+
+    return translit.romanize(txt.encode('utf-8')).decode('utf-8')
+
+@force_unicode
+def firstname2eng(syls):
+    '''한글 이름을 영문으로 변환'''
+
+    syls = (romanize(syl) for syl in syls)
+    firstname_en = '-'.join(syls)
+    return firstname_en.capitalize()
+
+@force_unicode
+def lastname2eng(syl):
+    '''한글 성을 영문으로 변환'''
+
+    # TODO: 영문 성씨 순위 데이터 구해서 높은 percentage의 성씨로 변환
+    lastnames = get_lastnames('lastnames.json')
+    lastname_en = lastnames.get(syl, romanize(syl))
+    return lastname_en.capitalize()
 
 @force_unicode
 def name2eng(name):
@@ -9,7 +39,6 @@ def name2eng(name):
     lastname, firstname = lastname2eng(last_syl), firstname2eng(first_syls)
     name_en =  u'%s %s' % (lastname, firstname)
     return name_en
-
 
 @force_unicode
 def party2eng(party):

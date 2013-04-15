@@ -19,6 +19,10 @@ def read_text(filename):
     with open(filename, 'r') as f:
         return f.read()
 
+def write_text(text, filename):
+    with open(filename, 'w') as f:
+        f.write(text.encode('utf-8'))
+
 def read_HHdic():
     dic = read_json(HH_DICTIONARY)
     return dic

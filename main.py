@@ -1,18 +1,19 @@
 #! /usr/bin/python2.7
 # -*- coding: utf-8 -*-
 
+import sys
 import time
 from pprint import pprint
 
-from structurize.importer import data_importer
-from structurize.preprocessor import preprocessor
-from babylon.babylon import build_dict
-from utils import counter
-import settings
+from utils import utils, counter
+import settings as s
 
 opts = {
-    1: "Extract bills",
-    2: "Structurize"
+    1: "Import data",
+    2: "Babylon",
+    3: "Bills",
+    4: "Structurize",
+    5: "Count"
 }
 
 def interface(opts):
@@ -22,36 +23,69 @@ def interface(opts):
     print '=============================\n'
     return opt
 
-def do_bills(path=settings.data["bills"]):
+def get_data(source=s.data["officials"],\
+        fieldname=s.structurizer["fieldname"],\
+        opt=s.structurizer["runopt"],\
+        target=s.results["test"]):
+
+    from utils.importer import data_importer
+
+    data = data_importer(source, opt, fieldname)
+    outf = "%s/people-%s-%s.txt" % (target, opt, fieldname)
+    utils.write_text('\n'.join(data), outf)
+
+    print 'Data written to ' + outf
+
+def do_babylon(path=s.data["officials"],\
+        fieldname=s.structurizer["fieldname"],\
+        opt=s.structurizer["runopt"]):
+
+    from structurize.importer import data_importer
+    from structurize.preprocessor import preprocessor
+    from babylon.babylon import build_dict
+
+    obj     = data_importer (path, opt, fieldname)
+    items   = preprocessor (obj)
+    dic     = build_dict (fieldname, items)
+
+    return dic
+
+def do_bills(path=s.data["bills"]):
     from bills.get import rawdata
     rawdata(path)
 
 def do_structurize():
-    INP = '/home/e9t/data/popong/people'
-    OPTION = 'test'
-    FIELDNAME = 'education' # 'education', 'party'
-    stime = time.time()
-
-    obj     = data_importer (INP, OPTION, FIELDNAME)
-    items   = preprocessor (obj)
-    dic     = build_dict (FIELDNAME, items)
     # TODO: spacer()
     # TODO: calc_bigrams()
+    return 'ok'
 
-    etime = time.time()
+def do_count():
+    #TODO(lucypark)
+    return 'good'
 
-    print etime - stime, "seconds"
+def main():
+    opt = interface(opts)
+
+    if 0 < int(opt) < len(opts)+1:
+
+        print "# " + opts[int(opt)]
+
+        stime = time.time()
+
+        if opt=='1': get_data()
+        elif opt=='2': do_babylon()
+        elif opt=='3': do_bills()
+        elif opt=='4': do_structurize()
+        elif opt=='5': do_count()
+        else: raise
+
+        etime = time.time()
+
+    else:
+        print "Warning: Input an integer from 1 to", len(opts)
+        sys.exit(2)
+
+    print "\n## Runtime: %f seconds" % (etime - stime)
 
 if __name__ == "__main__":
-    import sys
-
-    opt = interface(opts)
-    print ">> " + opts[int(opt)]
-
-    if opt=='1':
-        do_bills()
-    elif opt=='2':
-        do_structurize()
-    else:
-        print "! Warning: Input a given number"
-        sys.exit(2)
+    main()

@@ -5,7 +5,7 @@ import sys
 import time
 from pprint import pprint
 
-from utils import utils, counter
+from utils import utils, counter, encoder
 import settings as s
 
 opts = {
@@ -19,7 +19,11 @@ opts = {
 def interface(opts):
     print "== Team POPONG NLP Library =="
     pprint(opts)
-    opt = raw_input("Enter a number: ")
+
+    opt = ''
+    while(opt==''):
+        opt = raw_input("Enter a number: ")
+
     print '=============================\n'
     return opt
 
@@ -40,6 +44,7 @@ def do_babylon(path=s.data["officials"],\
         fieldname=s.structurizer["fieldname"],\
         opt=s.structurizer["runopt"]):
 
+    # FIX(lucypark): broken function
     from structurize.importer import data_importer
     from structurize.preprocessor import preprocessor
     from babylon.babylon import build_dict
@@ -51,13 +56,29 @@ def do_babylon(path=s.data["officials"],\
     return dic
 
 def do_bills(path=s.data["bills"]):
+    # TODO(lucypark): counter
     from bills.get import rawdata
     rawdata(path)
 
 def do_structurize():
     # TODO: spacer()
     # TODO: calc_bigrams()
-    return 'ok'
+
+    pprint(dict(enumerate(s.feature, start=1)))
+    opt = raw_input("Enter an option: ")
+
+    if opt=='1':
+        from structurize import district
+        cm = encoder.get_codemap('region')
+        district.main('district', cm)
+
+    elif opt=='2':
+        from structurize import education
+        education.main()
+
+    else:
+        print "Warning: Check your option"
+        sys.exit(2)
 
 def do_count():
     #TODO(lucypark)

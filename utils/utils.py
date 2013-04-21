@@ -97,6 +97,10 @@ def textify(obj, opt=''):
 def find_number(s):
     return int(re.findall(r'[0-9]+', s)[0])
 
+def get_words(string):
+    return regex.findall(ur'[\p{Hangul}|\p{Latin}|\p{Han}\+', string)
+
+
 if __name__ == '__main__':
     dic = read_HHdic()
     print(hanja2hangul(dic, '丁'))

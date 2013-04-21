@@ -19,7 +19,7 @@ def education_rules(fieldlist):
         '고보졸':'고등보통학교 졸업',
         '대퇴':'대학 중퇴',
         }
- 
+
     delwords = ['한문수학','한수','한문']
 
     # nullify
@@ -27,14 +27,14 @@ def education_rules(fieldlist):
         if item in delwords:
             item = ''
         return item
-    
+
     def nullify(fieldlist):
         return (_nullify(item) for item in fieldlist)
 
     # 약어 대체
     def _replace_abbrevs(item):
         return abbrevs.get(item, item)
- 
+
     def replace_abbrevs(fieldlist):
         newlist = []
         for item in fieldlist:
@@ -44,8 +44,8 @@ def education_rules(fieldlist):
                 newlist.append(tmp + item[idx:])
             else:
                 newlist.append(_replace_abbrevs(item))
-        return newlist 
-    
+        return newlist
+
     # 졸업 여부 체크
     def _check_grad(item):
         if item.endswith('졸'):
@@ -86,3 +86,6 @@ def education_rules(fieldlist):
     fieldlist = check_countries(fieldlist)
 
     return fieldlist
+
+def main():
+    print 'In preparation'

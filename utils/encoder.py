@@ -9,14 +9,21 @@ def get_codemap(opt, lang='ko'):
     cb = pd.read_csv('/home/e9t/dev/popong/nlp/_input/cb-%s.csv' % opt,
             encoding='utf-8', dtype={'code': object})
     cb = cb.dropna()
-    return dict(zip(cb[lang], cb['code']))
+    cm = {}
+    for d, c in zip(cb[lang], cb['code']):
+        if cm.get(d)==None:
+            cm[d] = [c]
+        else:
+            cm[d].append(c)
+    return cm
 
 def encode(word, codemap):
     try:
-        return int(codemap[word])
+        return codemap[word]
     except:
         return None
 
 if __name__=='__main__':
     cm = get_codemap('region')
+    #for k, v in cm.items(): print '%s %s' % (k, v)
     print encode(u'서울특별시', cm)

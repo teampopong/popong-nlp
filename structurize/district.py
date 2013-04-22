@@ -21,6 +21,9 @@ ALIASES = {
     '울산': '울산광역시',
     '광주': '광주광역시',
     '인천': '인천광역시',
+    '제주': '제주특별자치도',
+    '경기': '경기도',
+    '강원': '강원도',
     '충북': '충청북도',
     '충남': '충청남도',
     '전남': '전라남도',
@@ -45,22 +48,32 @@ def eraser(word, stopwords):
         word = ''
     return word
 
-def convert(line, cutmap, ends):
+def convert(line, ends):
 
     spaced = spacer(line, ends)
     words = regex.findall(ur'\p{Hangul}+', spaced)
 
     erased = filter(None, (eraser(word, STOPWORDS) for word in words))
     aliased = (ALIASES.get(word, word) for word in erased)
-    matched = (cutmap.get(word, word) for word in aliased)
 
-    return ' '.join(matched)
+    return ' '.join(aliased)
 
 def encode(line, codemap):
-    # TODO: 지역의 hierarchy를 따라 searching하도록 ('중구'같은 애들때문)
-    return [codemap.get(word) for word in line.split()]
+    # TODO: 지역의 hierarchy를 따라 searching하도록 ('서울특별시 중구'같은 애들때문)
+    encoded = []
+    for i, word in enumerate(line.split()):
+        code = codemap.get(word)
+        encoded.append(code)
+
+        if i==0 and code!=None:
+            codemap = {k:v for k,v in codemap.iteritems() if v.startswith(code)}
+            for k, v in codemap.items(): print k, v
+            import sys
+            sys.exit(2)
+    return encoded
 
 def pop(word, codemap):
+    # FIX: 부산 중동구 -> 부산광역시 중동
     i = 0
     popped = []
     for j in range(len(word)+1):
@@ -109,16 +122,16 @@ def main(opt, codemap):
     lines = data.split('\n')
 
     ## Convert data
-    cutmap = { k[:-1]: k for k in codemap }
     ends = [''.join(i) for i in list(itertools.product(LEVELS, SUBLEVELS))]
-    converted = (convert(line, cutmap, ends) for line in lines)
+
+    converted = [convert(line, ends) for line in lines]
     replaced = [replace(line, codemap) for line in converted]
     encoded = [encode(line, codemap) for line in replaced]
 
     ## Print results
-    write_results(lines, replaced, encoded,\
-            './_output/people-all-%s-encoded.txt' % opt)
-    #get_status('\n'.join(replaced), codemap)
+    for l, c, e in zip(lines, replaced, encoded): print '%s -> %s -> %s' % (l, c, e)
+    #write_results(lines, replaced, encoded, './_output/people-all-%s-encoded.txt' % opt)
+    get_status('\n'.join(replaced), codemap)
 
 if __name__=='__main__':
     OPT = 'district'

@@ -41,8 +41,8 @@ def do_babylon(path=s.data["officials"],\
         opt=s.structurizer["runopt"]):
 
     # FIX(lucypark): broken function
-    from structurize.importer import data_importer
-    from structurize.preprocessor import preprocessor
+    from structurizer.importer import data_importer
+    from structurizer.preprocessor import preprocessor
     from babylon.babylon import build_dict
 
     obj     = data_importer (path, opt, fieldname)
@@ -63,12 +63,12 @@ def do_structurize():
     opt = raw_input("Enter an option: ")
 
     if opt=='1':
-        from structurize import district
+        from structurizer import district
         cm = encoder.get_codemap('region')
         district.main('district', cm)
 
     elif opt=='2':
-        from structurize import education
+        from structurizer import education
         education.main()
 
     else:

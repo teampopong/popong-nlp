@@ -89,13 +89,9 @@ def encode(line, codemap):
 
 def struct(string, codemap):
     ends = [''.join(i) for i in list(itertools.product(LEVELS, SUBLEVELS))]
-    print string
     converted = convert(string, ends)
-    print converted
     replaced = replace(converted, codemap)
-    print replaced
     encoded = encode(replaced, codemap)
-    print encoded
     return encoded
 
 def write_results(lines, replaced, encoded, filename):

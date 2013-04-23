@@ -9,7 +9,7 @@ os.sys.path.append(parentdir)
 from utils import encoder
 import district
 
-def structurizer(_type, string):
+def structurize(_type, string):
     if _type=='district':
         cm = encoder.get_codemap('region')
         district.struct(string, cm)
@@ -18,4 +18,4 @@ def structurizer(_type, string):
         sys.exit(2)
 
 if __name__=='__main__':
-    print structurizer('district', u'서울 관악구 봉천동')
+    print structurize('district', u'서울 관악구 봉천동')

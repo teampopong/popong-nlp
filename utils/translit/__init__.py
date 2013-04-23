@@ -2,6 +2,8 @@
 # -*- coding: utf-8 -*-
 
 from __future__ import unicode_literals
+import sys
+
 import ko2en
 import cn2ko
 

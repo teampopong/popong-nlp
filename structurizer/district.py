@@ -87,12 +87,18 @@ def encode(line, codemap):
 
     return encoded
 
+def codepick(codes):
+    codes = filter(None, codes)
+    maxlen = max(len(c) for c in codes)
+    return [c for c in codes if len(c)==maxlen]
+
 def struct(string, codemap):
     ends = [''.join(i) for i in list(itertools.product(LEVELS, SUBLEVELS))]
     converted = convert(string, ends)
     replaced = replace(converted, codemap)
     encoded = encode(replaced, codemap)
-    return encoded
+    picked = codepick(encoded)
+    return picked
 
 def write_results(lines, replaced, encoded, filename):
     with open(filename, 'w') as f:
@@ -129,10 +135,12 @@ def main(opt, codemap):
     converted = [convert(line, ends) for line in lines]
     replaced = [replace(line, codemap) for line in converted]
     encoded = [encode(line, codemap) for line in replaced]
+    picked = [codepick(line) for line in encoded]
 
     ## Print results
     #for l, c in zip(lines, replaced): print '%s -> %s' % (l, c)
-    for l, c, e in zip(lines, replaced, encoded): print '%s -> %s -> %s' % (l, c, e)
+    for l, c, e, p in zip(lines, replaced, encoded, picked):
+        print '%s -> %s -> %s -> %s' % (l, c, e, p)
     #write_results(lines, replaced, encoded, './_output/people-all-%s-encoded.txt' % opt)
     #get_status('\n'.join(replaced), codemap)
 

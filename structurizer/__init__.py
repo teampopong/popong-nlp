@@ -10,7 +10,7 @@ from utils import encoder
 import settings as s
 import district
 
-def structurize(_type, string):
+def structurize(string, _type):
     if _type=='district':
         cm = encoder.get_codemap('region',\
                 path='%s/%s' % (parentdir, s.path['codebook']['region']))

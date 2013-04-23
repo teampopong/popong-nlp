@@ -20,7 +20,7 @@ Team POPONG NLP Package
 2. Structurize
 
         >>> from nlp.structurizer import structurize
-        >>> structurize('district', u'경기도 부천시원미구을')
+        >>> structurize(u'경기도 부천시원미구을', 'district')
         ['31050', '31051']
 
 ## Structure

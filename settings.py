@@ -17,7 +17,9 @@ results = {
 }
 
 path = {
-    "codebook": ("./_input/cb-", ".csv")
+    "codebook": {
+        "region": "_input/cb-region.csv"
+    }
 }
 
 structurizer = {

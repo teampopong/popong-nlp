@@ -7,12 +7,14 @@ import sys
 parentdir = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 os.sys.path.append(parentdir)
 from utils import encoder
+import settings as s
 import district
 
 def structurize(_type, string):
     if _type=='district':
-        cm = encoder.get_codemap('region')
-        district.struct(string, cm)
+        cm = encoder.get_codemap('region',\
+                path='%s/%s' % (parentdir, s.path['codebook']['region']))
+        return district.struct(string, cm)
     else:
         print 'Warning: Invalid input'
         sys.exit(2)

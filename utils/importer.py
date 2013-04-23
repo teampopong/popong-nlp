@@ -24,7 +24,9 @@ def data_importer(path, opt='test', fieldname='name_kr', source='file'):
         # Elected officials are included in candidates
         allfiles = glob(os.path.join(path, '*_candidates_*.json'))
         filenames = select_files(allfiles, opt)
-        fieldlist = [p[fieldname] for f in filenames for p in read_people(f)]
+
+        fieldlist = [p.get(fieldname)\
+        for f in filenames for p in read_people(f) if p.get(fieldname)]
         printer()
 
     elif source=='db':

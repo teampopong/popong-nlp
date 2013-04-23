@@ -90,7 +90,7 @@ def encode(line, codemap):
 def codepick(codes):
     codes = filter(None, codes)
     maxlen = max(len(c) for c in codes)
-    return [c for c in codes if len(c)==maxlen]
+    return [str(c) for c in codes if len(c)==maxlen]
 
 def struct(string, codemap):
     ends = [''.join(i) for i in list(itertools.product(LEVELS, SUBLEVELS))]

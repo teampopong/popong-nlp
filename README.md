@@ -4,53 +4,56 @@ Team POPONG NLP Package
 ## Dependencies
 - `pip install regex unidecode`
 
-## Packages 
-1. `main.py`
-2. `settings.py`
-3. `README.md`
+## Usage
+1. Translit
 
-### babylon/
-1. `babylon.py`
-    - creates dictionaries
-2. `canonizer/`
-    - finds canonical names from Wikipedia
+        from nlp.utils.translit import translit
+        translit('박근혜', 'ko', 'en', 'name')
+        translit('한나라당', 'ko', 'en', 'party')
+        translit('안녕하세요', 'ko', 'en')
+        translit('丁新闻', 'cn', 'ko')
 
-### bills/
-1. `converter.sh`
-    - converts `pdf` files to `txt` files
-    - depends on [pdfminer](http://www.unixuser.org/~euske/python/pdfminer/)
-2. `get.py`
-    - retrieves `txt` files from a given `path`
+2. Structurize
 
-### structurize/
-1. `importer.py`
-    - retrieves each attribute for officials
-2. `eval.py`
-    - evaluator
+        from nlp.structurizer import structurize
+        structurize('district', u'경기도 부천시원미구을')
 
-### utils/
-1. `counter.py`
-    - counts eojeols
-2. `translit/`
-    1. `cn2ko.py`
-        - read Chinese
-    1. `ko2en.py`
-        - use this file to romanize names and parties
-        - names:
-            - ex: romanize.name2eng('박근혜')
-        - parties:
-            - ex: romanize.party2eng('새누리당')
-
-### _test/
-Temporary test codes.
-
-1. `bigrams.py`
-    - TODO: currently broken!
-
-## Data
-### _input/
-Temporary input files.
-
-### _output/
-Temporary output files.
-
+## Structure
+    .
+    ├── README.md
+    ├── main.py
+    ├── settings.py
+    │
+    ├── babylon/
+    │   ├── babylon.py          # creates dictionaries
+    │   ├── canonizer/          # finds canonical names from Wikipedia
+    │   └── __init__.py
+    ├── bills/
+    │   ├── converter.sh        # converts `pdf` files to `txt` files (depends on [pdfminer](http://www.unixuser.org/~euske/python/pdfminer/))
+    │   ├── get.py              # retrieves `txt` files from a given path
+    │   └── __init__.py
+    ├── __init__.py
+    ├── _input/                 # temporary input files
+    │   ├── cb-region.csv
+    │   ├── lastnames.json
+    ├── _output/                # temporary output files
+    ├── structurizer
+    │   ├── district.py
+    │   ├── education.py
+    │   ├── eval.py             # evaluator (in preparation)
+    │   ├── __init__.py
+    │   ├── preprocessor.py
+    │   └── replace.py
+    ├── _test/                  # temporary test codes
+    │   ├── bigrams.py
+    │   ├── count.csv
+    │   └── counter.py
+    └── utils/
+        ├── counter.py          # counts eojeols
+        ├── encoder.py
+        ├── importer.py         # retrieves each attribute for officials
+        ├── __init__.py
+        ├── preprocessing.py
+        ├── structurizer.py
+        ├── translit/
+        └── utils.py

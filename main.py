@@ -1,28 +1,24 @@
 #! /usr/bin/python2.7
 # -*- coding: utf-8 -*-
 
+import os
 import sys
 import time
 from pprint import pprint
 
+parentdir = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+os.sys.path.append(parentdir)
 from utils import utils, counter, encoder
 import settings as s
 
-opts = {
-    1: "Import data",
-    2: "Babylon",
-    3: "Bills",
-    4: "Structurize",
-    5: "Count"
-}
 
-def interface(opts):
-    print "== Team POPONG NLP Library =="
-    pprint(opts)
+def interface():
+    print "== Team POPONG NLP Library ==\n"
+    pprint(s.main['opts'])
 
     opt = ''
     while(opt==''):
-        opt = raw_input("Enter a number: ")
+        opt = raw_input("\nEnter a number: ")
 
     print '=============================\n'
     return opt
@@ -61,10 +57,9 @@ def do_bills(path=s.data["bills"]):
     rawdata(path)
 
 def do_structurize():
-    # TODO: spacer()
-    # TODO: calc_bigrams()
+    # TODO(lucypark): calc_bigrams()
 
-    pprint(dict(enumerate(s.feature, start=1)))
+    pprint(dict(enumerate(s.features, start=1)))
     opt = raw_input("Enter an option: ")
 
     if opt=='1':
@@ -85,21 +80,13 @@ def do_count():
     return 'good'
 
 def main():
-    opt = interface(opts)
+    opt = int(interface())
+    opts = s.main['opts']
 
     if 0 < int(opt) < len(opts)+1:
-
-        print "# " + opts[int(opt)]
-
+        print "# " + opts[opt]
         stime = time.time()
-
-        if opt=='1': get_data()
-        elif opt=='2': do_babylon()
-        elif opt=='3': do_bills()
-        elif opt=='4': do_structurize()
-        elif opt=='5': do_count()
-        else: raise
-
+        eval(opts[opt])()
         etime = time.time()
 
     else:

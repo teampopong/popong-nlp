@@ -8,6 +8,7 @@ from glob import glob
 from pprint import pprint
 
 def data_importer(path, opt='test', fieldname='name_kr', source='file'):
+    #FIX: list found for attr 'experience'
     #TODO(lucypark): Get multiple fields
 
     def printer():

@@ -3,10 +3,11 @@
 
 import csv
 import pandas as pd
+import settings as s
 
 def get_codemap(opt, lang='ko'):
-    #TODO: change absolute path
-    cb = pd.read_csv('/home/e9t/dev/popong/nlp/_input/cb-%s.csv' % opt,
+    cb = pd.read_csv(\
+            '%s%s%s' % (s.path["codebook"][0], opt, s.path["codebook"][1]),
             encoding='utf-8', dtype={'code': object})
     cb = cb.dropna()
     cm = {}
@@ -25,5 +26,4 @@ def encode(word, codemap):
 
 if __name__=='__main__':
     cm = get_codemap('region')
-    #for k, v in cm.items(): print '%s %s' % (k, v)
     print encode(u'서울특별시', cm)

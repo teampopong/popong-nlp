@@ -8,30 +8,14 @@ import sys
 import itertools
 from collections import Counter
 
+import settings as s
 import regex
 import pandas as pd
 
-LEVELS = ['시', '군', '구']
-SUBLEVELS = ['갑', '을']
-STOPWORDS = ['제', '선거구', '지역구']
-ALIASES = {
-    '서울': '서울특별시',
-    '대전': '대전광역시',
-    '대구': '대구광역시',
-    '부산': '부산광역시',
-    '울산': '울산광역시',
-    '광주': '광주광역시',
-    '인천': '인천광역시',
-    '제주': '제주특별자치도',
-    '경기': '경기도',
-    '강원': '강원도',
-    '충북': '충청북도',
-    '충남': '충청남도',
-    '전남': '전라남도',
-    '전북': '전라북도',
-    '경남': '경상남도',
-    '경북': '경상북도'
-}
+LEVELS = s.district['levels']
+SUBLEVELS = s.district['sublevels']
+STOPWORDS = s.district['stopwords']
+ALIASES = s.district['aliases']
 
 def read_data(data):
     with open(data, 'r') as f:
@@ -94,10 +78,24 @@ def encode(line, codemap):
             if codemap.get(word):
                 codes = [code for code in codemap.get(word)\
                     if code.startswith(encoded[0])]
-                encoded.append(codes[0])
+                if len(codes)!=0:
+                    encoded.append(codes[0])
+                else:
+                    encoded.append(None)
             else:
                 encoded.append(None)
 
+    return encoded
+
+def struct(string, codemap):
+    ends = [''.join(i) for i in list(itertools.product(LEVELS, SUBLEVELS))]
+    print string
+    converted = convert(string, ends)
+    print converted
+    replaced = replace(converted, codemap)
+    print replaced
+    encoded = encode(replaced, codemap)
+    print encoded
     return encoded
 
 def write_results(lines, replaced, encoded, filename):

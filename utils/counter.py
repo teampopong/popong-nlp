@@ -6,12 +6,11 @@ import regex    # http://www.regular-expressions.info/unicode.html
 
 import preprocessing as prep
 
-def count(text):
-    with open(text, 'r') as f:
-        doc = f.read().decode('utf-8')
-        doc = prep.english(doc)
-        doc = prep.korean(doc)
-        words = regex.findall(ur'[\p{Hangul}|\p{Latin}|\p{Han}]+', doc)
+def count(doc):
+    doc = doc.decode('utf-8')
+    doc = prep.english(doc)
+    doc = prep.korean(doc)
+    words = regex.findall(ur'[\p{Hangul}|\p{Latin}|\p{Han}]+', doc)
     cnt = Counter(words)
     # for c in cnt.most_common(num): print c[0], c[1]
     return sorted(dict(cnt).items(), key=lambda x:x[1], reverse=True)

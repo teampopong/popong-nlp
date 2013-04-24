@@ -7,7 +7,6 @@ import re
 import sys
 import itertools
 from collections import Counter
-
 import settings as s
 import regex
 import pandas as pd
@@ -65,25 +64,25 @@ def replace(line, codemap):
 def encode(line, codemap):
 
     encoded = []
-    for i, word in enumerate(line.split()):
+    words = line.split()
 
+    for i, word in enumerate(words):
+        codes = codemap.get(word)
         if i==0:
-            codes = codemap.get(word)
             if len(codes)==1:
-                encoded.append(codes[0])
+                code = codes[0]
             else:
-                print 'uh-oh'
-                sys.exit(2)
+                code = None
         else:
-            if codemap.get(word):
-                codes = [code for code in codemap.get(word)\
-                    if code.startswith(encoded[0])]
-                if len(codes)!=0:
-                    encoded.append(codes[0])
+            if codes:
+                subcodes = [c for c in codes if c.startswith(encoded[0])]
+                if len(subcodes)!=0:
+                    code = subcodes[0]
                 else:
-                    encoded.append(None)
+                    code = None
             else:
-                encoded.append(None)
+                code = None
+        encoded.append(code)
 
     return encoded
 
@@ -91,6 +90,19 @@ def codepick(codes):
     codes = filter(None, codes)
     maxlen = max(len(c) for c in codes)
     return [str(c) for c in codes if len(c)==maxlen]
+
+def markup(string, codemap):
+    ends = [''.join(i) for i in list(itertools.product(LEVELS, SUBLEVELS))]
+    converted = convert(string, ends)
+    replaced = replace(converted, codemap)
+    encoded = encode(replaced, codemap)
+
+    tokens = replaced.split()
+    if len(tokens)==len(encoded):
+        return zip(tokens, encoded)
+    else:
+        print 'This cannot be happening!'
+        sys.exit(2)
 
 def struct(string, codemap):
     ends = [''.join(i) for i in list(itertools.product(LEVELS, SUBLEVELS))]
@@ -103,7 +115,7 @@ def struct(string, codemap):
 def write_results(lines, replaced, encoded, filename):
     with open(filename, 'w') as f:
         for l, c, e in zip(lines, replaced, encoded):
-            s = '%s -> %s -> %s' % (l, c, e)
+            s = '%s -> %s -> %s' % (l, c, ' '.join('%s/%s' % (d, c) for d, c in e))
             f.write(s.encode('utf-8'))
             f.write('\n')
     print 'Results written to %s' % filename
@@ -127,21 +139,22 @@ def get_status(data, codemap):
 def main(opt, codemap):
     ## Get data
     data  = read_data('./_output/people-all-%s.txt' % opt)
-    #lines = data.split('\n')
-    lines = data.split('\n')[500:600] # 경기 부천시원미구갑
+    lines = data.split('\n')
+    #lines = data.split('\n')[500:600] # 경기 부천시원미구갑
+    #lines = data.split('\n')[1200:1300] # 서울 노원구병
 
     ## Convert data
     ends = [''.join(i) for i in list(itertools.product(LEVELS, SUBLEVELS))]
     converted = [convert(line, ends) for line in lines]
     replaced = [replace(line, codemap) for line in converted]
-    encoded = [encode(line, codemap) for line in replaced]
-    picked = [codepick(line) for line in encoded]
+    #encoded = [encode(line, codemap) for line in replaced]
+    #picked = [codepick(line) for line in encoded]
+    marked = [markup(line, codemap) for line in replaced]
 
     ## Print results
-    #for l, c in zip(lines, replaced): print '%s -> %s' % (l, c)
-    for l, c, e, p in zip(lines, replaced, encoded, picked):
-        print '%s -> %s -> %s -> %s' % (l, c, e, p)
-    #write_results(lines, replaced, encoded, './_output/people-all-%s-encoded.txt' % opt)
+    #for l, c, m in zip(lines, replaced, marked): print '%s -> %s -> %s' % (l, c, m)
+    write_results(lines, replaced, marked, './_output/people-all-%s-marked.txt' % opt)
+    #for l, c, e, p in zip(lines, replaced, encoded, picked): print '%s -> %s -> %s -> %s' % (l, c, e, p)
     #get_status('\n'.join(replaced), codemap)
 
 if __name__=='__main__':

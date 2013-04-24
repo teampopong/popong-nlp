@@ -11,6 +11,9 @@ Team POPONG NLP Package
         >>> from nlp.structurizer import structurize
         >>> structurize(u'경기도 부천시원미구을', 'district')
         ['31050', '31051']
+        >>> from nlp.structurizer import markup
+        >>> markup(u'경기도 부천시원미구을', 'district')
+        [(u'\uacbd\uae30\ub3c4', u'31'), (u'\ubd80\ucc9c\uc2dc', u'31050'), (u'\uc6d0\ubbf8\uad6c', u'31051'), (u'\uc744', None)]
 
 3. Canonize
 

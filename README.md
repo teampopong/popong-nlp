@@ -23,6 +23,12 @@ Team POPONG NLP Package
         >>> structurize(u'경기도 부천시원미구을', 'district')
         ['31050', '31051']
 
+3. Canonize
+
+        >>> from nlp.babylon.canonizer import canonize
+        >>> canonize(u'서울대')
+        u'\uc11c\uc6b8\ub300\ud559\uad50'
+
 ## Structure
     .
     ├── README.md
@@ -45,7 +51,6 @@ Team POPONG NLP Package
     ├── structurizer
     │   ├── district.py
     │   ├── education.py
-    │   ├── eval.py             # evaluator (in preparation)
     │   ├── __init__.py
     │   ├── preprocessor.py
     │   └── replace.py
@@ -56,6 +61,7 @@ Team POPONG NLP Package
     └── utils/
         ├── counter.py          # counts eojeols
         ├── encoder.py
+    │   ├── eval.py             # evaluator (in preparation)
         ├── importer.py         # retrieves each attribute for officials
         ├── __init__.py
         ├── preprocessing.py

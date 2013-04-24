@@ -44,7 +44,7 @@ main = {
 
 district = {
     "levels"    : ["시", "군", "구"],
-    "sublevels" : ["갑", "을"],
+    "sublevels" : ["갑", "을", "병"],
     "stopwords" : ["제", "선거구", "지역구"],
     "aliases"   : {
         "서울": "서울특별시",

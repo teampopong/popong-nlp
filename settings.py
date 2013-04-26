@@ -7,8 +7,7 @@ from __future__ import unicode_literals
 data = {
     "officials" : "/home/e9t/data/popong/people",
     "bills"     : "/home/e9t/data/popong/bills/pdf",
-    "HHdic"     : "/home/e9t/data/hanja-hangul.json",
-    "test"      : "./_input"
+    "HHdic"     : "/home/e9t/data/hanja-hangul.json"
 }
 
 results = {

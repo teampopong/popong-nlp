@@ -6,7 +6,7 @@ Team POPONG NLP Package
 
 ## Usage
 
-2. Structurize
+1. Structurizer
 
         >>> from nlp.structurizer import structurize
         >>> structurize(u'경기도 부천시원미구을', 'district')
@@ -15,13 +15,13 @@ Team POPONG NLP Package
         >>> markup(u'경기도 부천시원미구을', 'district')
         [(u'\uacbd\uae30\ub3c4', u'31'), (u'\ubd80\ucc9c\uc2dc', u'31050'), (u'\uc6d0\ubbf8\uad6c', u'31051'), (u'\uc744', None)]
 
-3. Canonize
+1. Canonizer
 
         >>> from nlp.babylon.canonizer import canonize
         >>> canonize(u'서울대')
         u'\uc11c\uc6b8\ub300\ud559\uad50'
 
-1. Translit
+1. Transliterator
 
         >>> from nlp.utils.translit import translit
         >>> translit('박근혜', 'ko', 'en', 'name')
@@ -63,25 +63,19 @@ Team POPONG NLP Package
     │
     ├── babylon/
     │   ├── babylon.py          # creates dictionaries
-    │   ├── canonizer/          # finds canonical names from Wikipedia
-    │   └── __init__.py
-    ├── bills/
-    │   ├── converter.sh        # converts `pdf` files to `txt` files (depends on [pdfminer](http://www.unixuser.org/~euske/python/pdfminer/))
-    │   ├── get.py              # retrieves `txt` files from a given path
-    │   └── __init__.py
-    ├── __init__.py
-    ├── _input/                 # temporary input files
-    │   ├── cb-region.csv
-    │   ├── lastnames.json
-    ├── _output/                # temporary output files
-    ├── structurizer
+    │   └── canonizer/          # finds canonical names from Wikipedia
+    ├── structurizer/
     │   ├── district.py
     │   ├── education.py
-    │   ├── __init__.py
     │   ├── preprocessor.py
     │   └── replace.py
+    ├── _input/                 # temporary input files
+    │   ├── cb-region.csv
+    │   └── lastnames.json
+    ├── _output/                # temporary output files
     ├── _test/                  # temporary test codes
     │   ├── bigrams.py
+    │   ├── bills/              # converts `pdf` files to `txt` files (depends on [pdfminer](http://www.unixuser.org/~euske/python/pdfminer/))
     │   ├── count.csv
     │   └── counter.py
     └── utils/
@@ -89,7 +83,6 @@ Team POPONG NLP Package
         ├── encoder.py
         ├── eval.py             # evaluator (in preparation)
         ├── importer.py         # retrieves each attribute for officials
-        ├── __init__.py
         ├── preprocessing.py
         ├── structurizer.py
         ├── translit/

@@ -24,8 +24,8 @@ def interface():
     return opt
 
 def get_data(source=s.data["officials"],\
-        fieldname=s.structurizer["fieldname"],\
-        opt=s.structurizer["runopt"],\
+        fieldname=s.importer["fieldname"],\
+        opt=s.importer["runopt"],\
         target=s.results["test"]):
 
     from utils.importer import data_importer
@@ -37,8 +37,8 @@ def get_data(source=s.data["officials"],\
     print 'Data written to ' + outf
 
 def do_babylon(path=s.data["officials"],\
-        fieldname=s.structurizer["fieldname"],\
-        opt=s.structurizer["runopt"]):
+        fieldname=s.importer["fieldname"],\
+        opt=s.importer["runopt"]):
 
     # FIX(lucypark): broken function
     from structurizer.importer import data_importer
@@ -65,12 +65,12 @@ def do_structurize():
     if opt=='1':
         from structurizer import district
         cm = encoder.get_codemap('region')
-        district.main('district', cm)
+        district.main(cm)
 
     elif opt=='2':
         from structurizer import education
         cm = encoder.get_codemap('highereducation')
-        education.main()
+        education.main(cm)
 
     else:
         print "Warning: Check your option"

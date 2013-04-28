@@ -17,7 +17,7 @@ def read_json(filename):
 
 def read_text(filename):
     with open(filename, 'r') as f:
-        return f.read()
+        return f.read().decode('utf-8')
 
 def write_text(text, filename):
     with open(filename, 'w') as f:

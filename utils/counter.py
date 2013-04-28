@@ -4,12 +4,21 @@
 from collections import Counter
 import regex    # http://www.regular-expressions.info/unicode.html
 
-import preprocessing as prep
+def prep_english(doc):
+    # to lower case (그렇다면 약어는 어떻게?)
+    doc = doc.lower()
+    # TODO: remove stopwords
+    return doc
+
+def prep_korean(doc):
+    # TODO: morpheme analysis, spacing
+    # TODO: hanja transliteration?
+    return doc
 
 def count(doc):
     doc = doc.decode('utf-8')
-    doc = prep.english(doc)
-    doc = prep.korean(doc)
+    doc = prep_english(doc)
+    doc = prep_korean(doc)
     words = regex.findall(ur'[\p{Hangul}|\p{Latin}|\p{Han}]+', doc)
     cnt = Counter(words)
     # for c in cnt.most_common(num): print c[0], c[1]

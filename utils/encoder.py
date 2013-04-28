@@ -5,10 +5,15 @@ import csv
 import pandas as pd
 import settings as s
 
-def get_codemap(opt, lang='ko', path=s.path['codebook']['region']):
+def get_codemap(opt, lang='ko', directory=''):
+    if directory!='':
+        directory = directory + '/'
+    path = '%s%s/cb-%s.csv' % (directory, s.data['codebook'], opt)
+
     cb = pd.read_csv(path, encoding='utf-8', dtype={'code': object})
     cb = cb.dropna()
     cm = {}
+
     for d, c in zip(cb[lang], cb['code']):
         if cm.get(d)==None:
             cm[d] = [c]

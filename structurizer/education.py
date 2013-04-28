@@ -1,6 +1,8 @@
 #! /usr/bin/python3
 # -*- coding: utf=8 -*-
 
+import settings as s
+
 def apply_rules(fieldname, fieldlist):
     if fieldname == 'education':
         fieldlist = education_rules(fieldlist)
@@ -86,6 +88,12 @@ def education_rules(fieldlist):
     fieldlist = check_countries(fieldlist)
 
     return fieldlist
+
+def struct(string, codemap):
+    print 'tba'
+
+def markup(string, codemap):
+    print 'tba'
 
 def main():
     print 'In preparation'

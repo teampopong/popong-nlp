@@ -5,6 +5,7 @@ from __future__ import unicode_literals
 
 ## Settings
 data = {
+    "codebook"  : "_input",
     "officials" : "/home/e9t/data/popong/people",
     "bills"     : "/home/e9t/data/popong/bills/pdf",
     "HHdic"     : "/home/e9t/data/hanja-hangul.json"
@@ -15,21 +16,15 @@ results = {
     "test"      : "./_output"
 }
 
-path = {
-    "codebook": {
-        "region": "_input/cb-region.csv"
-    }
-}
-
 structurizer = {
     "fieldname" : "district",
     "runopt"    : "all" # test, all, [some integer]
 }
 
 ## Global variables
-features = ["district", "address", "education"]
+features = ["district", "education"]
 others = ["name_kr", "name_cn", "assembly_no", "party", "birthday",\
-    "birthmonth", "birthyear", "image", "sex", "cand_no", "elected"]
+    "birthmonth", "birthyear", "image", "sex", "cand_no", "elected", "address"]
 
 main = {
     "opts" : {

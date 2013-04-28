@@ -69,6 +69,7 @@ def do_structurize():
 
     elif opt=='2':
         from structurizer import education
+        cm = encoder.get_codemap('highereducation')
         education.main()
 
     else:

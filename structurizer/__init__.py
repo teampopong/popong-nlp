@@ -8,22 +8,26 @@ parentdir = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 os.sys.path.append(parentdir)
 from utils import encoder
 import settings as s
-import district
+import district, education
 
 
-CM = encoder.get_codemap('region',\
-                path='%s/%s' % (parentdir, s.path['codebook']['region']))
+CM_REGION = encoder.get_codemap('region', directory=parentdir)
+CM_EDUCATION = encoder.get_codemap('highereducation', directory=parentdir)
 
 def structurize(string, _type):
     if _type=='district':
-        return district.struct(string, CM)
+        return district.struct(string, CM_REGION)
+    elif _type=='education':
+        return education.struct(string, CM_EDUCATION)
     else:
         print 'Warning: Invalid input'
         sys.exit(2)
 
 def markup(string, _type):
     if _type=='district':
-        return district.markup(string, CM)
+        return district.markup(string, CM_REGION)
+    elif _type=='education':
+        return education.markup(string, CM_EDUCATION)
     else:
         print 'Warning: Invalid input'
         sys.exit(2)

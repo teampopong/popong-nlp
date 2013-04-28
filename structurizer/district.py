@@ -18,8 +18,8 @@ STOPWORDS = s.district['stopwords']
 ALIASES = s.district['aliases']
 
 def convert(line):
-    spaced = base.spacer(line, ENDS)
-    words = base.wordify(spaced)
+    split = base.endsplitter(line, ENDS)
+    words = base.wordify(split)
     erased = base.eraser(words, STOPWORDS)
     canonized = base.canonizer(erased, ALIASES)
     return ' '.join(canonized)

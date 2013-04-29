@@ -14,7 +14,7 @@ data = {
 }
 
 results = {
-    "dict"      : "./_output",
+    "dict"      : "./dict",
     "test"      : "./_output"
 }
 

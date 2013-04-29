@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*-
 
 import re
-import utils
+from utils import utils
 
 def preprocessor(fieldlist):
     dic = utils.read_HHdic()
@@ -56,9 +56,9 @@ def _check_parenthesis(item):
     else:
         inword = item[s+1:e]
         if item[s-1]==u' ':
-            outword = item[2*s-e:s-1] 
+            outword = item[2*s-e:s-1]
         else:
-            outword = item[2*s-e+1:s] 
+            outword = item[2*s-e+1:s]
         if inword==outword:
             item = item.replace(item[s:e+1],'')
     return item

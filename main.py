@@ -36,20 +36,11 @@ def get_data(source=s.data["officials"],\
 
     print 'Data written to ' + outf
 
-def do_babylon(path=s.data["officials"],\
-        fieldname=s.importer["fieldname"],\
-        opt=s.importer["runopt"]):
-
-    # FIX(lucypark): broken function
-    from structurizer.importer import data_importer
-    from structurizer.preprocessor import preprocessor
-    from babylon.babylon import build_dict
-
-    obj     = data_importer (path, opt, fieldname)
-    items   = preprocessor (obj)
-    dic     = build_dict (fieldname, items)
-
-    return dic
+def do_babylon(fieldname=s.babylon["fieldname"], filename=s.babylon["input_file"]):
+    from babylon.babylon import build_alias_dict
+    items = utils.read_text(filename)
+    build_alias_dict(fieldname, items)
+    #TODO(lucypark): Alias를 corpus에 있는 term으로 한정하기
 
 def do_bills(path=s.data["bills"]):
     # TODO(lucypark): counter

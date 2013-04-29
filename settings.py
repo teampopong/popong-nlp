@@ -2,7 +2,10 @@
 # -*- coding: utf-8 -*-
 from __future__ import unicode_literals
 
-## Settings
+
+# Settings -----------------------------------------
+
+## Global settings
 data = {
     "codebook"  : "_input",
     "officials" : "/home/e9t/data/popong/people",
@@ -15,10 +18,32 @@ results = {
     "test"      : "./_output"
 }
 
+## Module settings
 importer = {
     "fieldname" : "district",
     "runopt"    : "all" # test, all, [some integer]
 }
+
+babylon = {
+    "fieldname" : "education",
+    "input_file"  : "_output/people-all-education-semistructured.txt"
+}
+
+canonizer = {
+    "user_agent": "Mozilla/5.0",
+    "wiki_url"  : "http://ko.wikipedia.org/wiki/",
+    "google_url": "http://www.google.com/search?hl=en&q=",
+    "xpaths"    : {
+        "wiki_canonical_name"  : '//h1[@id="firstHeading"]/span',
+        "wiki_categories"      : '//div[@id="mw-normal-catlinks"]',
+        "google_search_results": '//li[@class="g"]',
+        "google_cites"         : '//body//li[@class="g"]//h3[@class="r"]//@href',
+        "google_titles"        : '//body//li[@class="g"]//h3[@class="r"]//text()'
+    }
+}
+
+
+# Variables -----------------------------------------
 
 ## Global variables
 features = ["district", "education"]
@@ -28,13 +53,14 @@ others = ["name_kr", "name_cn", "assembly_no", "party", "birthday",\
 main = {
     "opts" : {
         1: "get_data",
-        2: "do_babylon (in preparation)",
+        2: "do_babylon",
         3: "do_bills (in preparation)",
         4: "do_structurize",
         5: "do_count (in preparation)"
     }
 }
 
+## Module variables
 district = {
     "levels"    : ["시", "군", "구"],
     "sublevels" : ["갑", "을", "병"],

@@ -5,65 +5,57 @@ from __future__ import unicode_literals
 import sys, json
 from urllib2 import HTTPError
 import gevent
-from gevent.monkey import patch_all; patch_all()
+#FIXME(lucypark): Exception KeyError (http://stackoverflow.com/questions/8774958)
+from gevent.monkey import patch_all; patch_all(thread=False)
 
 from canonizer.wikipedia import canonical_name
+from utils import utils
+import settings as s
 
-# FIXME: global name 'etree' not defined Error
+def build_alias_dict(fieldname, doc):
+    terms = get_terms(doc)
+    write_terms(fieldname, terms)
 
-def print_json(filename, data):
-    with open(filename, 'w') as f:
-        json.dump(data, f, indent=2)
+    alias_dic = get_aliases(terms)
+    write_aliases(fieldname, alias_dic)
 
-def build_dict(fieldname, obj):
+def get_terms(doc):
+   terms = list(set(doc.split()))
+   sys.stdout.write('n(terms)\t: '); print len(terms)
+   return terms
 
-    text = textify(obj)
-    filename = '_output/%s.txt' % (fieldname)
-    with open(filename, 'w') as f:
-        f.write(text.encode('utf-8'))
-
-    words = unique_words(text)
-    filename = '_output/%s-wordlist.json' % (fieldname)
-    print_json(filename, words)
-
-    sys.stdout.write('n(unique_words)\t: ')
-    print len(words)
-
-    dic = {}
-    i = 0
+def get_aliases(terms):
+    i = 1
     jobs = []
+    alias_dic = {}
 
-    for word in words:
-        sys.stdout.write(str(i)+'\t')
-        #hashing(word, dic)
-        job = gevent.spawn(hashing, word, dic)
+    for term in terms:
+        #hashing(word, dic, i)
+        job = gevent.spawn(hashing, term, alias_dic, i)
         jobs.append(job)
         i += 1
-
     gevent.joinall(jobs)
-    filename = '_output/%s.json' % (fieldname)
-    print_json(filename, dic)
 
-    return dic
+    return alias_dic
 
-def textify(obj):
-    if isinstance(obj, list):
-        return '<s> ' + ' </s>\n<s> '.join(obj) + ' </s>'
-    else:
-        raise ValueError
+def write_terms(fieldname, terms):
+    f = '%s/terms-%s.txt' % (s.results["dict"], fieldname)
+    utils.write_text('\n'.join(terms), f)
+    print 'Terms written to ' + f
 
-def unique_words(text):
-   l = text.split()
-   w = list(set(l))
-   return w
+def write_aliases(fieldname, aliases):
+    f = '%s/aliases-%s.json' % (s.results["dict"], fieldname)
+    utils.write_json(f, aliases)
+    print 'Aliases written to ' + f
 
-def hashing(word, dic):
+def hashing(word, dic, i):
     try:
         canon = canonical_name(word.encode('utf-8'))
-        dic[word] = canon
-        print word, '\t: ', canon
-    except HTTPError, e:
-        print word
+        if word!=canon:
+            dic[word] = canon
+        print '%s\t%s\t: %s' % (str(i), word, canon)
+    except:
+        print '%s\t%s\t: pass' % (str(i), word)
 
 if __name__ == '__main__':
     print "Good"

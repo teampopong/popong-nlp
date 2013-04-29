@@ -9,11 +9,19 @@ from collections import Counter
 
 HH_DICTIONARY = '/home/e9t/data/hanja-hangul.json'
 
+
+## Read / write
+
 def read_json(filename):
     with open(filename, 'r') as f:
         j = f.read()
         data = json.loads(j)
     return data
+
+def write_json(filename, data):
+    with open(filename, 'w') as f:
+        json.dump(data, f, indent=2)
+
 
 def read_text(filename):
     with open(filename, 'r') as f:
@@ -22,6 +30,16 @@ def read_text(filename):
 def write_text(text, filename):
     with open(filename, 'w') as f:
         f.write(text.encode('utf-8'))
+
+def write_csv(filename, data, headers=None):
+    with open(filename, 'wb') as f:
+        w = csv.writer(f, delimiter=',', quotechar='|', quoting=csv.QUOTE_MINIMAL)
+        if headers:
+            w.writerow(headers)
+        for d in data:
+            w.writerow(d)
+
+## Others
 
 def read_HHdic():
     dic = read_json(HH_DICTIONARY)
@@ -36,22 +54,6 @@ def hanja2hangul(dic, string):
 def get_alpha(string):
     s = string.encode('utf-8')
     return s.isalpha()
-
-def write_csv(filename, data, headers=None):
-    with open(filename, 'wb') as f:
-        w = csv.writer(f, delimiter=',', quotechar='|', quoting=csv.QUOTE_MINIMAL)
-        if headers:
-            w.writerow(headers)
-        for d in data:
-            w.writerow(d)
-
-def print_json(filename, data):
-    with open(filename, 'w') as f:
-        json.dump(data, f, indent=2)
-
-def print_text(filename, data):
-    with open(filename, 'w') as f:
-        f.write(data)
 
 def prettify(wordlist):
     def right_align(_list, max_length):

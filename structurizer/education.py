@@ -9,26 +9,32 @@ import base
 STARTS = s.education['countries']
 ENDS = s.education['statuses']
 STOPWORDS = s.education['stopwords']
-ABBREVS = s.education['aliases']
-ALIASES = utils.read_json('dict/aliases-education.json')
+ABBREVS = s.education['abbrevs']
+ALIASES = s.education['aliases']
 TERMS = ALIASES.keys() + ALIASES.values()
 for i in s.education['to_ignore']: TERMS.remove(i)
 
 def reverse_pop(word):
     popped = []
+    '''
     exception = u'대학원'
     f = word.find(exception)
     if f > 0:
         popped = [word[:f], exception, word[f+3:]]
     else:
-        for j in range(len(word), -1, -1):
-            challenger, remainder = word[:j], word[j:]
-            if challenger in TERMS:
+    '''
+    for j in range(len(word), -1, -1):
+        challenger, remainder = word[:j], word[j:]
+        if challenger in TERMS:
+            if word[j]==u'원':
+                popped.append(word[:j+1])
+                popped.append(word[j+1:])
+            else:
                 popped.append(challenger)
                 popped.append(remainder)
-                break
-            if j==0:
-                popped.append(word)
+            break
+        if j==0:
+            popped.append(word)
     return popped
 
 def spacer(line):

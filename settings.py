@@ -6,8 +6,7 @@ from __future__ import unicode_literals
 # Settings -----------------------------------------
 
 ## Global settings
-data = {
-    "codebook"  : "_input",
+data = { "codebook"  : "_input",
     "officials" : "/home/e9t/data/popong/people",
     "bills"     : "/home/e9t/data/popong/bills/pdf",
     "HHdic"     : "/home/e9t/data/hanja-hangul.json"
@@ -88,10 +87,13 @@ district = {
 education = {
     "countries" : ["일본", "미국", "만주"],
     "statuses"  : ["졸", "졸업", "수료", "중퇴", "제적", "박사", "석사", "수학"],
-    "stopwords" : ["미기재", "현", "한문수학", "한수", "한문"],
+    "stopwords" : ["미기재", "현", "한문수학", "한수", "한문", "독학"],
+    "to_ignore"   : ["대학", "박사"],     # Words to ignore when spacing (rule-based)
     "aliases"   : {
+        # General
         "졸": "졸업",
         "대": "대학",
+        "원": "대학원",
         "중": "중학교",
         "소": "소학교",
         "전": "전문대학",
@@ -101,6 +103,10 @@ education = {
         "초": "초등학교",
         "고보": "고등보통학교",
         "전문": "전문대학",
-        "대퇴": "대학 중퇴"
+        "대퇴": "대학 중퇴",
+        "미": "미국",
+        "일": "일본",
+        # Rules
+        "고대": "고려대학교"
     }
 }

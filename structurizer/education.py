@@ -10,6 +10,7 @@ STARTS = s.education['countries']
 ENDS = s.education['statuses']
 STOPWORDS = s.education['stopwords']
 ABBREVS = s.education['aliases']
+ALIASES = utils.read_json('dict/aliases-education.json')
 
 def convert(line):
     endsplit = base.endsplitter(line, ENDS)
@@ -17,6 +18,7 @@ def convert(line):
     words = base.wordify(startsplit)
     erased = base.eraser(words, STOPWORDS)
     canonized = base.canonizer(erased, ABBREVS)
+    canonized = base.canonizer(canonized, ALIASES)
     return ' '.join(canonized)
 
 def struct(string, codemap):
@@ -35,13 +37,11 @@ def main(codemap):
     ## Get data
     data = utils.read_text('./_output/people-all-education.txt')
     lines = data.split('\n')
+    lines = data.split('\n')[-100:-30]
 
     ## Convert data
     converted = [convert(line) for line in lines]
 
-    ## Get aliases
-    #TODO(lucypark)
-
-    ## Pring results
+    ## Print results
     for l, c in zip(lines, converted): print '%s -> %s' % (l, c)
-    write_results('_output/people-all-education-semistructured.txt', converted)
+    #write_results('_output/people-all-education-semistructured.txt', converted)

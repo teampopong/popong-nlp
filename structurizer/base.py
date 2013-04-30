@@ -19,7 +19,7 @@ def startsplitter(line, starts):
     return line
 
 def wordify(line):
-    return regex.findall(ur'[\p{Hangul}|\p{Number}]+', line)
+    return regex.findall(ur'[\p{Hangul}|\p{Latin}|\p{Number}]+', line)
 
 def eraser(words, stopwords):
 
@@ -46,7 +46,7 @@ def pop(word, codemap):
     # FIX: 부산 중동구 -> 부산광역시 중동
     i = 0
     popped = []
-    for j in range(len(word)+1):
+    for j in range(1, len(word)+1):
         challenger = codemap.get(word[i:j])
         if challenger!=None:
             popped.append(word[i:j])

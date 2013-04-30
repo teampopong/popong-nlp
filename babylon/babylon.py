@@ -30,13 +30,39 @@ def get_aliases(terms):
     alias_dic = {}
 
     for term in terms:
-        #hashing(word, dic, i)
-        job = gevent.spawn(hashing, term, alias_dic, i)
+        #hashing(word, terms, alias_dic, i)
+        job = gevent.spawn(hashing, term, terms, alias_dic, i)
         jobs.append(job)
         i += 1
     gevent.joinall(jobs)
 
     return alias_dic
+
+def hashing(word, terms, dic, i):
+    try:
+        canon = canonical_name(word.encode('utf-8'))
+        selected = select(canon, terms)
+        if selected not in [None, word]:
+            dic[word] = selected
+        print '%s\t%s\t: %s, %s' % (str(i), word, canon, selected)
+    except:
+        print '%s\t%s\t: pass' % (str(i), word)
+
+def select(alias, terms):
+
+    f = alias.find('(')
+    if f > 0:
+        selected = alias[:f]
+    else:
+        selected = alias
+
+    r = selected.replace(' ', '')
+    if r in terms:
+        selected = r
+    else:
+        selected = None
+
+    return selected
 
 def write_terms(fieldname, terms):
     f = '%s/terms-%s.txt' % (s.results["dict"], fieldname)
@@ -48,17 +74,12 @@ def write_aliases(fieldname, aliases):
     utils.write_json(f, aliases)
     print 'Aliases written to ' + f
 
-def hashing(word, dic, i):
-    try:
-        canon = canonical_name(word.encode('utf-8'))
-        if word!=canon:
-            dic[word] = canon
-        print '%s\t%s\t: %s' % (str(i), word, canon)
-    except:
-        print '%s\t%s\t: pass' % (str(i), word)
 
 if __name__ == '__main__':
     print "Good"
     # etime - stime, "seconds"
     # education 전체로 돌렸을 때 9083 sec
     # party 전체로 돌렸을 때 82 sec
+
+    # Update 2013-04-30:
+    #   preprocessing 후 education 전체로 돌리니 354초!

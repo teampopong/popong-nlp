@@ -40,7 +40,6 @@ def do_babylon(fieldname=s.babylon["fieldname"], filename=s.babylon["input_file"
     from babylon.babylon import build_alias_dict
     items = utils.read_text(filename)
     build_alias_dict(fieldname, items)
-    #TODO(lucypark): Alias를 corpus에 있는 term으로 한정하기
 
 def do_bills(path=s.data["bills"]):
     # TODO(lucypark): counter

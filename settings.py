@@ -1,5 +1,6 @@
 #! /usr/bin/python2.7
 # -*- coding: utf-8 -*-
+
 from __future__ import unicode_literals
 
 
@@ -7,6 +8,7 @@ from __future__ import unicode_literals
 
 ## Global settings
 data = { "codebook"  : "_input",
+    "aliases-education" : "/home/e9t/dev/popong/nlp/dict/aliases-education.json",
     "officials" : "/home/e9t/data/popong/people",
     "bills"     : "/home/e9t/data/popong/bills/pdf",
     "HHdic"     : "/home/e9t/data/hanja-hangul.json"
@@ -84,12 +86,14 @@ district = {
     }
 }
 
+from utils import utils
 education = {
     "countries" : ["일본", "미국", "만주"],
     "statuses"  : ["졸", "졸업", "수료", "중퇴", "제적", "박사", "석사", "수학"],
     "stopwords" : ["미기재", "현", "한문수학", "한수", "한문", "독학"],
     "to_ignore"   : ["대학", "박사"],     # Words to ignore when spacing (rule-based)
-    "aliases"   : {
+    "aliases" : utils.read_json(data['aliases-education']),
+    "abbrevs"   : {
         # General
         "졸": "졸업",
         "대": "대학",

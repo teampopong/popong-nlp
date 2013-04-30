@@ -16,13 +16,6 @@ for i in s.education['to_ignore']: TERMS.remove(i)
 
 def reverse_pop(word):
     popped = []
-    '''
-    exception = u'대학원'
-    f = word.find(exception)
-    if f > 0:
-        popped = [word[:f], exception, word[f+3:]]
-    else:
-    '''
     for j in range(len(word), -1, -1):
         challenger, remainder = word[:j], word[j:]
         if challenger in TERMS:
@@ -69,7 +62,10 @@ def markup(string, codemap):
             return None
 
     converted = convert(string)
-    tokens = converted.split()
+    spaced = spacer(converted)
+    final = convert(spaced)
+
+    tokens = final.split()
     encoded = (encode(token) for token in tokens)
     return zip(tokens, encoded)
 
@@ -86,7 +82,6 @@ def main(codemap):
     ## Get data
     data = utils.read_text('./_output/people-all-education.txt')
     lines = data.split('\n')
-    #lines = data.split('\n')[14460:14470]
 
     ## Convert data
     converted = [convert(line) for line in lines]
@@ -95,6 +90,5 @@ def main(codemap):
     marked = [markup(line, codemap) for line in final]
 
     ## Print results
-    #for l, f in zip(lines, final): print '%s -> %s ' % (l, f)
-    #for l, c, m in zip(lines, converted, marked): print '%s -> %s -> %s' % (l, c, ' '.join('%s/%s' % (d, c) for d, c in m))
+    #for l, f, m in zip(lines, final, marked): print '%s -> %s -> %s' % (l, f, ' '.join('%s/%s' % (d, c) for d, c in m))
     write_results(lines, marked, '_output/people-all-education-marked.txt')

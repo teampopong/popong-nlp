@@ -24,15 +24,6 @@ def convert(line):
     canonized = base.canonizer(erased, ALIASES)
     return ' '.join(canonized)
 
-def replace(line, codemap):
-    replaced = []
-    for word in line.split():
-        if word in ENDS or codemap.get(word):
-            replaced.append(word)
-        else:
-            replaced.append(base.pop(word, codemap))
-    return ' '.join(replaced)
-
 def codepick(codes):
     codes = filter(None, codes)
     maxlen = max(len(c) for c in codes)
@@ -40,10 +31,10 @@ def codepick(codes):
 
 def markup(string, codemap):
     converted = convert(string)
-    replaced = replace(converted, codemap)
-    encoded = base.encoder(replaced, codemap)
+    spaced = base.spacer(converted, codemap, ENDS)
+    encoded = base.encoder(spaced, codemap)
 
-    tokens = replaced.split()
+    tokens = spaced.split()
     if len(tokens)==len(encoded):
         return zip(tokens, encoded)
     else:
@@ -52,17 +43,17 @@ def markup(string, codemap):
 
 def struct(string, codemap):
     converted = convert(string)
-    replaced = replace(converted, codemap)
-    encoded = base.encoder(replaced, codemap)
+    spaced = base.spacer(converted, codemap, ENDS)
+    encoded = base.encoder(spaced, codemap)
     picked = codepick(encoded)
     return picked
 
 
 def main(codemap):
 
-    def write_results(lines, replaced, encoded, filename):
+    def write_results(lines, spaced, encoded, filename):
         with open(filename, 'w') as f:
-            for l, c, e in zip(lines, replaced, encoded):
+            for l, c, e in zip(lines, spaced, encoded):
                 s = '%s -> %s -> %s' % (l, c, ' '.join('%s/%s' % (d, c) for d, c in e))
                 f.write(s.encode('utf-8'))
                 f.write('\n')
@@ -93,13 +84,13 @@ def main(codemap):
 
     ## Convert data
     converted = [convert(line) for line in lines]
-    replaced = [replace(line, codemap) for line in converted]
-    #encoded = [base.encoder(line, codemap) for line in replaced]
+    spaced = [base.spacer(line, codemap, ENDS) for line in converted]
+    #encoded = [base.encoder(line, codemap) for line in spaced]
     #picked = [codepick(line) for line in encoded]
-    marked = [markup(line, codemap) for line in replaced]
+    marked = [markup(line, codemap) for line in spaced]
 
     ## Print results
-    #for l, c, m in zip(lines, replaced, marked): print '%s -> %s -> %s' % (l, c, m)
-    write_results(lines, replaced, marked, './_output/people-all-district-marked.txt')
-    #for l, c, e, p in zip(lines, replaced, encoded, picked): print '%s -> %s -> %s -> %s' % (l, c, e, p)
-    #get_status('\n'.join(replaced), codemap)
+    for l, c, m in zip(lines, spaced, marked): print '%s -> %s -> %s' % (l, c, m)
+    #write_results(lines, spaced, marked, './_output/people-all-district-marked.txt')
+    #for l, c, e, p in zip(lines, spaced, encoded, picked): print '%s -> %s -> %s -> %s' % (l, c, e, p)
+    #get_status('\n'.join(spaced), codemap)

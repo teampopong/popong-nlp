@@ -33,6 +33,15 @@ def eraser(words, stopwords):
 def canonizer(words, aliases):
     return (aliases.get(word, word) for word in words)
 
+def spacer(line, codemap, ignore=[]):
+    spaced = []
+    for word in line.split():
+        if word in ignore or codemap.get(word):
+            spaced.append(word)
+        else:
+            spaced.append(pop(word, codemap))
+    return ' '.join(spaced)
+
 def pop(word, codemap):
     # FIX: 부산 중동구 -> 부산광역시 중동
     i = 0

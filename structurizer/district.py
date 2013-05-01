@@ -9,9 +9,9 @@ from collections import Counter
 
 import pandas as pd
 
-import settings as s
-from utils import utils
-import base
+from .. import settings as s
+from ..utils import utils
+from . import base
 
 ENDS = s.district['sublevels']
 STOPWORDS = s.district['stopwords']

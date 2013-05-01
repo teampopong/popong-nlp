@@ -4,13 +4,12 @@
 import os
 import sys
 
+from ..utils import encoder
+from .. import settings as s
+from . import district
+from . import education
+
 parentdir = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-os.sys.path.append(parentdir)
-from utils import encoder
-import settings as s
-import district, education
-
-
 CM_REGION = encoder.get_codemap('region', directory=parentdir)
 CM_EDUCATION = encoder.get_codemap('highereducation', directory=parentdir)
 

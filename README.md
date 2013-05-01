@@ -1,6 +1,8 @@
 Team POPONG NLP Package
 =======================
 
+<span style="color: red; font-weight: bold;">CAUTION: outdated</span>
+
 ## Dependencies
 - `pip install regex unidecode`
 

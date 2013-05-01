@@ -3,7 +3,9 @@
 
 import csv
 import pandas as pd
-import settings as s
+
+
+from .. import settings as s
 
 def get_codemap(opt, lang='ko', directory=''):
     if directory!='':

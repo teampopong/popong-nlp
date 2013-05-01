@@ -3,8 +3,8 @@
 
 import urllib2
 
-import get
-import settings as s
+from . import get
+from ... import settings as s
 
 USER_AGENT = s.canonizer["user_agent"]
 WIKI_URL = s.canonizer["wiki_url"]

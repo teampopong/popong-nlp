@@ -9,8 +9,8 @@ import gevent
 from gevent.monkey import patch_all; patch_all(thread=False)
 
 from canonizer.wikipedia import canonical_name
-from utils import utils
-import settings as s
+from ..utils import utils
+from .. import settings as s
 
 def build_alias_dict(fieldname, doc):
     terms = get_terms(doc)

@@ -7,8 +7,6 @@ import codecs
 import csv
 from collections import Counter
 
-HH_DICTIONARY = '/home/e9t/data/hanja-hangul.json'
-
 
 ## Read / write
 
@@ -40,16 +38,6 @@ def write_csv(filename, data, headers=None):
             w.writerow(d)
 
 ## Others
-
-def read_HHdic():
-    dic = read_json(HH_DICTIONARY)
-    return dic
-
-def hanja2hangul(dic, string):
-    s = ''
-    for letter in string:
-        s = s + dic.get(letter, letter)
-    return s
 
 def get_alpha(string):
     s = string.encode('utf-8')
@@ -101,8 +89,3 @@ def find_number(s):
 
 def get_words(string):
     return regex.findall(ur'[\p{Hangul}|\p{Latin}|\p{Han}\+', string)
-
-
-if __name__ == '__main__':
-    dic = read_HHdic()
-    print(hanja2hangul(dic, '丁'))

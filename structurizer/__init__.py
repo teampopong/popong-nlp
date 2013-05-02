@@ -10,8 +10,8 @@ from . import district
 from . import education
 
 parentdir = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-CM_REGION = encoder.get_codemap('region', directory=parentdir)
-CM_EDUCATION = encoder.get_codemap('highereducation', directory=parentdir)
+CM_REGION = encoder.get_codemap('region')
+CM_EDUCATION = encoder.get_codemap('education')
 
 def structurize(string, _type):
     if _type=='district':

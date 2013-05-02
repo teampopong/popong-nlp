@@ -7,10 +7,8 @@ import pandas as pd
 
 from .. import settings as s
 
-def get_codemap(opt, lang='ko', directory=''):
-    if directory!='':
-        directory = directory + '/'
-    path = '%s%s/cb-%s.csv' % (directory, s.data['codebook'], opt)
+def get_codemap(opt, lang='ko'):
+    path = s.codebook[opt]
 
     cb = pd.read_csv(path, encoding='utf-8', dtype={'code': object})
     cb = cb.dropna()
@@ -28,7 +26,3 @@ def encode(word, codemap):
         return codemap[word]
     except:
         return None
-
-if __name__=='__main__':
-    cm = get_codemap('region')
-    print encode(u'서울특별시', cm)

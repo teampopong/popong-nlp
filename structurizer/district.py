@@ -77,7 +77,7 @@ def main(codemap):
         for u in unencoded: print u
 
     ## Get data
-    data  = utils.read_text('./_output/people-all-district.txt')
+    data  = utils.read_text('%s/people-all-district.txt' % s.results["test"])
     lines = data.split('\n')
     #lines = data.split('\n')[500:600] # 경기 부천시원미구갑
     #lines = data.split('\n')[1200:1300] # 서울 노원구병
@@ -90,7 +90,7 @@ def main(codemap):
     marked = [markup(line, codemap) for line in spaced]
 
     ## Print results
-    for l, c, m in zip(lines, spaced, marked): print '%s -> %s -> %s' % (l, c, m)
-    #write_results(lines, spaced, marked, './_output/people-all-district-marked.txt')
+    #for l, c, m in zip(lines, spaced, marked): print '%s -> %s -> %s' % (l, c, m)
+    write_results(lines, spaced, marked, '%s/people-all-district-marked.txt' % s.results["test"])
     #for l, c, e, p in zip(lines, spaced, encoded, picked): print '%s -> %s -> %s -> %s' % (l, c, e, p)
     #get_status('\n'.join(spaced), codemap)

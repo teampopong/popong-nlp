@@ -80,7 +80,7 @@ def main(codemap):
         print 'Written to ' + filename
 
     ## Get data
-    data = utils.read_text('./_output/people-all-education.txt')
+    data = utils.read_text('%s/people-all-education.txt' % s.results["test"])
     lines = data.split('\n')
 
     ## Convert data
@@ -91,4 +91,4 @@ def main(codemap):
 
     ## Print results
     #for l, f, m in zip(lines, final, marked): print '%s -> %s -> %s' % (l, f, ' '.join('%s/%s' % (d, c) for d, c in m))
-    write_results(lines, marked, '_output/people-all-education-marked.txt')
+    write_results(lines, marked, '%s/people-all-education-marked.txt' % s.results["test"])

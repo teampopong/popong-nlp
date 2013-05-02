@@ -4,21 +4,31 @@
 from __future__ import unicode_literals
 import os.path
 
+from .utils import utils
+
+def get_path(f):
+    return os.path.join(os.path.dirname(__file__), f)
 
 # Settings -----------------------------------------
 
 ## Global settings
-data = { "codebook"  : "_input",
-    "aliases-education" : os.path.join(os.path.dirname(__file__), 'dict/aliases-education.json'),
+data = {
     "officials" : "/home/e9t/data/popong/people",
     "bills"     : "/home/e9t/data/popong/bills/pdf",
-    "HHdic"     : "/home/e9t/data/hanja-hangul.json"
+    "HHdic"     : get_path("dict/hanja-hangul.json"),
+    "aliases-education" : get_path('dict/aliases-education.json')
 }
 
 results = {
-    "dict"      : "./dict",
-    "test"      : "./_output"
+    "dict"      : get_path("dict"),
+    "test"      : get_path("_output")
 }
+
+codebook = {
+    "region"    : get_path("codebooks/cb-administrative-divisions-20100401-edited.csv"),
+    "education" : get_path("codebooks/cb-higher-education-institutes-d20130501-unique.csv")
+}
+
 
 ## Module settings
 importer = {
@@ -28,7 +38,7 @@ importer = {
 
 babylon = {
     "fieldname" : "education",
-    "input_file"  : "_output/people-all-education-semistructured.txt"
+    "input_file"  : get_path("_output/people-all-education-semistructured.txt")
 }
 
 canonizer = {
@@ -87,7 +97,6 @@ district = {
     }
 }
 
-from utils import utils
 education = {
     "countries" : ["일본", "미국", "만주"],
     "statuses"  : ["졸", "졸업", "수료", "중퇴", "제적", "박사", "석사", "수학"],

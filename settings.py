@@ -15,6 +15,7 @@ def get_path(f):
 data = {
     "officials" : "/home/e9t/data/popong/people",
     "bills"     : "/home/e9t/data/popong/bills/pdf",
+    "lastnames" : get_path("dict/lastnames.json"),
     "HHdic"     : get_path("dict/hanja-hangul.json"),
     "aliases-education" : get_path('dict/aliases-education.json')
 }

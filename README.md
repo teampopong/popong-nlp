@@ -28,11 +28,11 @@ Team POPONG NLP Package
 1. Transliterator
 
         >>> from nlp.utils.translit import translit
-        >>> translit('박근혜', 'ko', 'en', 'name')
+        >>> translit(u'박근혜', 'ko', 'en', 'name')
         'Park Geun-hye'
-        >>> translit('한나라당', 'ko', 'en', 'party')
+        >>> translit(u'한나라당', 'ko', 'en', 'party')
         'Hannara Party'
-        >>> translit('안녕하세요', 'ko', 'en')
+        >>> translit(u'안녕하세요', 'ko', 'en')
         'Annyeonghaseyo'
         >>> translit(u'丁新闻', 'cn', 'ko')
         u'\uc815\uc2e0\ubb38'

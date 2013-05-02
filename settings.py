@@ -2,13 +2,14 @@
 # -*- coding: utf-8 -*-
 
 from __future__ import unicode_literals
+import os.path
 
 
 # Settings -----------------------------------------
 
 ## Global settings
 data = { "codebook"  : "_input",
-    "aliases-education" : "/home/e9t/dev/popong/nlp/dict/aliases-education.json",
+    "aliases-education" : os.path.join(os.path.dirname(__file__), 'dict/aliases-education.json'),
     "officials" : "/home/e9t/data/popong/people",
     "bills"     : "/home/e9t/data/popong/bills/pdf",
     "HHdic"     : "/home/e9t/data/hanja-hangul.json"

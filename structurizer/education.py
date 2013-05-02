@@ -1,10 +1,10 @@
 #! /usr/bin/python3
 # -*- coding: utf=8 -*-
 
-from babylon import canonizer
-from utils import utils
-import settings as s
-import base
+from ..babylon import canonizer
+from ..utils import utils
+from .. import settings as s
+from . import base
 
 STARTS = s.education['countries']
 ENDS = s.education['statuses']

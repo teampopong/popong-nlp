@@ -65,12 +65,12 @@ def select(alias, terms):
     return selected
 
 def write_terms(fieldname, terms):
-    f = '%s/terms-%s.txt' % (s.results["dict"], fieldname)
+    f = '%s/terms-%s.txt' % (s.data["dict"], fieldname)
     utils.write_text('\n'.join(terms), f)
     print 'Terms written to ' + f
 
 def write_aliases(fieldname, aliases):
-    f = '%s/aliases-%s.json' % (s.results["dict"], fieldname)
+    f = '%s/aliases-%s.json' % (s.data["dict"], fieldname)
     utils.write_json(f, aliases)
     print 'Aliases written to ' + f
 

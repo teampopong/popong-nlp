@@ -4,7 +4,8 @@ Team POPONG NLP Package
 <span style="color: red; font-weight: bold;">CAUTION: outdated</span>
 
 ## Dependencies
-- `pip install regex unidecode`
+
+    pip install regex unidecode
 
 ## Usage
 
@@ -62,8 +63,9 @@ Team POPONG NLP Package
 ## Structure
     .
     ├── README.md
-    ├── main.py
     ├── settings.py
+    ├── codebooks/
+    ├── dict/
     │
     ├── babylon/
     │   ├── babylon.py          # creates dictionaries
@@ -73,15 +75,6 @@ Team POPONG NLP Package
     │   ├── education.py
     │   ├── preprocessor.py
     │   └── replace.py
-    ├── _input/                 # temporary input files
-    │   ├── cb-region.csv
-    │   └── lastnames.json
-    ├── _output/                # temporary output files
-    ├── _test/                  # temporary test codes
-    │   ├── bigrams.py
-    │   ├── bills/              # converts `pdf` files to `txt` files (depends on [pdfminer](http://www.unixuser.org/~euske/python/pdfminer/))
-    │   ├── count.csv
-    │   └── counter.py
     └── utils/
         ├── counter.py          # counts eojeols
         ├── encoder.py

@@ -68,27 +68,3 @@ def markup(string, codemap):
     tokens = final.split()
     encoded = (encode(token) for token in tokens)
     return zip(tokens, encoded)
-
-def main(codemap):
-
-    def write_results(lines, marked, filename):
-        with open(filename, 'w') as f:
-            for l, m in zip(lines, marked):
-                s = '%s -> %s\n' % (l, ' '.join('%s/%s' % (d, c) for d, c in m))
-                f.write(s.encode('utf-8'))
-
-        print 'Written to ' + filename
-
-    ## Get data
-    data = utils.read_text('%s/people-all-education.txt' % s.results["test"])
-    lines = data.split('\n')
-
-    ## Convert data
-    converted = [convert(line) for line in lines]
-    spaced = [spacer(line) for line in converted]
-    final = [convert(line) for line in spaced]
-    marked = [markup(line, codemap) for line in final]
-
-    ## Print results
-    #for l, f, m in zip(lines, final, marked): print '%s -> %s -> %s' % (l, f, ' '.join('%s/%s' % (d, c) for d, c in m))
-    write_results(lines, marked, '%s/people-all-education-marked.txt' % s.results["test"])

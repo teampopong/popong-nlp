@@ -24,26 +24,81 @@ def convert(line):
     canonized = base.canonizer(erased, ALIASES)
     return ' '.join(canonized)
 
+def spacer(line, codemap, ignore=[]):
+
+    def pop(word, codemap):
+        # FIX: 부산 중동구 -> 부산광역시 중동
+        i = 0
+        popped = []
+        for j in range(1, len(word)+1):
+            challenger = codemap.get(word[i:j])
+            if challenger!=None:
+                popped.append(word[i:j])
+                i = j
+            if j==len(word) and not popped:
+                popped.append(word)
+        return ' '.join(popped)
+
+    spaced = []
+    for word in line.split():
+        if word in ignore or codemap.get(word):
+            spaced.append(word)
+        else:
+            spaced.append(pop(word, codemap))
+    return ' '.join(spaced)
+
+def encoder(line, codemap):
+    encoded = []
+    words = line.split()
+
+    for i, word in enumerate(words):
+        codes = codemap.get(word)
+        if i==0:
+            if len(codes)==1:
+                code = codes[0]
+            else:
+                code = None
+        else:
+            if codes:
+                subcodes = [c for c in codes if c.startswith(encoded[0])]
+                if len(subcodes)!=0:
+                    code = subcodes[0]
+                else:
+                    code = None
+            else:
+                code = None
+        encoded.append(code)
+
+    return encoded
+
 def codepick(codes):
     codes = filter(None, codes)
     maxlen = max(len(c) for c in codes)
     return [str(c) for c in codes if len(c)==maxlen]
 
+def get_unique(seq):
+    seen = set()
+    seen_add = seen.add
+    return [ x for x in seq if x not in seen and not seen_add(x)]
+
 def markup(string, codemap):
     converted = convert(string)
-    spaced = base.spacer(converted, codemap, ENDS)
-    encoded = base.encoder(spaced, codemap)
+    spaced = spacer(converted, codemap, ENDS)
+    encoded = encoder(spaced, codemap)
 
     tokens = spaced.split()
     if len(tokens)==len(encoded):
-        return zip(tokens, encoded)
+        marked = zip(tokens, encoded)
     else:
         print 'This cannot be happening!'
         sys.exit(2)
 
+    unique = get_unique(marked)
+    return unique
+
 def struct(string, codemap):
     converted = convert(string)
-    spaced = base.spacer(converted, codemap, ENDS)
-    encoded = base.encoder(spaced, codemap)
+    spaced = spacer(converted, codemap, ENDS)
+    encoded = encoder(spaced, codemap)
     picked = codepick(encoded)
     return picked

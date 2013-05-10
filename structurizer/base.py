@@ -29,6 +29,3 @@ def eraser(words, stopwords):
         return word
 
     return filter(None, (erase(word) for word in words))
-
-def canonizer(words, aliases):
-    return (aliases.get(word, word) for word in words)

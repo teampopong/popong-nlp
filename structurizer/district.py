@@ -17,11 +17,14 @@ ENDS = s.district['sublevels']
 STOPWORDS = s.district['stopwords']
 ALIASES = s.district['aliases']
 
+def canonizer(words, aliases):
+    return (aliases.get(word, word) for word in words)
+
 def convert(line):
     split = base.endsplitter(line, ENDS)
     words = base.wordify(split)
     erased = base.eraser(words, STOPWORDS)
-    canonized = base.canonizer(erased, ALIASES)
+    canonized = canonizer(erased, ALIASES)
     return ' '.join(canonized)
 
 def spacer(line, codemap, ignore=[]):
@@ -54,7 +57,7 @@ def encoder(line, codemap):
     for i, word in enumerate(words):
         codes = codemap.get(word)
         if i==0:
-            if len(codes)==1:
+            if codes and len(codes)==1:
                 code = codes[0]
             else:
                 code = None

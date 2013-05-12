@@ -14,7 +14,7 @@ CM_REGION = encoder.get_codemap('region')
 CM_EDUCATION = encoder.get_codemap('education')
 
 def structurize(string, _type):
-    if _type=='district':
+    if _type in ['district','address']:
         return district.struct(string, CM_REGION)
     elif _type=='education':
         return education.struct(string, CM_EDUCATION)
@@ -23,7 +23,7 @@ def structurize(string, _type):
         sys.exit(2)
 
 def markup(string, _type):
-    if _type=='district':
+    if _type in ['district','address']:
         return district.markup(string, CM_REGION)
     elif _type=='education':
         return education.markup(string, CM_EDUCATION)

@@ -16,7 +16,8 @@ def prep_korean(doc):
     return doc
 
 def count(doc):
-    doc = doc.decode('utf-8')
+    #TODO: if not unicode convert to unicode
+    #doc = doc.decode('utf-8')
     doc = prep_english(doc)
     doc = prep_korean(doc)
     words = regex.findall(ur'[\p{Hangul}|\p{Latin}|\p{Han}]+', doc)

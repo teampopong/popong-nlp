@@ -1,7 +1,6 @@
 Team POPONG NLP Package
 =======================
 
-<span style="color: red; font-weight: bold;">CAUTION: outdated</span>
 
 ## Dependencies
 
@@ -77,10 +76,8 @@ Team POPONG NLP Package
     │   └── replace.py
     └── utils/
         ├── counter.py          # counts eojeols
-        ├── encoder.py
+        ├── encoder.py          # assigns codes to strings
         ├── eval.py             # evaluator (in preparation)
         ├── importer.py         # retrieves each attribute for officials
-        ├── preprocessing.py
-        ├── structurizer.py
-        ├── translit/
+        ├── translit.py
         └── utils.py

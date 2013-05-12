@@ -76,10 +76,3 @@ def read_people(filename):
         j = f.read()
         people = json.loads(j)
     return people
-
-if __name__ == '__main__':
-    fieldlist = data_importer('/home/e9t/data/popong/people'
-            , fieldname='education')
-
-    for item in fieldlist:
-        print item.encode('utf-8')

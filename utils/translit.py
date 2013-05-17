@@ -37,10 +37,13 @@ def ko2en(string, _type):
         return _name2eng(string)
     elif _type=='party':
         return _party2eng(string)
+    elif _type=='school':
+        # TODO(cornchz): implement
+        return unidecode(string)
     elif _type==None:
         return unidecode(string)
     else:
-        print 'Warning: Invalid type (name, party)'
+        print 'Warning: Unknown type'
         sys.exit(2)
 
 def cn2ko(string):

@@ -1,7 +1,6 @@
 #! /usr/bin/python3
 # -*- coding: utf=8 -*-
 
-from ..babylon import canonizer
 from ..utils import utils
 from .. import settings as s
 from . import base
@@ -30,6 +29,9 @@ def reverse_pop(word):
             popped.append(word)
     return popped
 
+def canonizer(words, aliases):
+    return (aliases.get(word, word) for word in words)
+
 def spacer(line):
     words = line.split()
     spaced = []
@@ -45,8 +47,8 @@ def convert(line):
     startsplit = base.startsplitter(endsplit, STARTS)
     words = base.wordify(startsplit)
     erased = base.eraser(words, STOPWORDS)
-    canonized = base.canonizer(erased, ABBREVS)
-    canonized = base.canonizer(canonized, ALIASES)
+    canonized = canonizer(erased, ABBREVS)
+    canonized = canonizer(canonized, ALIASES)
     return ' '.join(canonized)
 
 def struct(string, codemap):

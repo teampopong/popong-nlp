@@ -20,7 +20,7 @@ def _name2eng(name):
     # Convert firstname
     firstname_en = '-'.join(unidecode(syl) for syl in first_syls).title()
 
-    name_en =  u'%s %s' % (lastname_en, firstname_en)
+    name_en =  u'%s, %s' % (lastname_en, firstname_en)
     return name_en
 
 def _party2eng(party):

@@ -2,6 +2,7 @@
 # -*- coding: utf-8 -*-
 
 from collections import Counter
+import re
 import regex    # http://www.regular-expressions.info/unicode.html
 
 def prep_english(doc):
@@ -13,14 +14,20 @@ def prep_english(doc):
 def prep_korean(doc):
     # TODO: morpheme analysis, spacing
     # TODO: hanja transliteration?
-    return doc
+    return re.sub(unichr(int('318d', 16)), ' ', doc)
 
-def count(doc):
+def get_words(doc, minlen=None):
     #TODO: if not unicode convert to unicode
     #doc = doc.decode('utf-8')
     doc = prep_english(doc)
     doc = prep_korean(doc)
     words = regex.findall(ur'[\p{Hangul}|\p{Latin}|\p{Han}]+', doc)
+    if minlen:
+        words = [w for w in words if len(w) >= minlen]
+    return words
+
+def count(doc):
+    words = get_words(doc)
     cnt = Counter(words)
     # for c in cnt.most_common(num): print c[0], c[1]
     return sorted(dict(cnt).items(), key=lambda x:x[1], reverse=True)

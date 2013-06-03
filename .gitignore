@@ -1,5 +1,6 @@
 *.pyc
 .DS_Store
+*.Rhistory
 
 _input
 _output

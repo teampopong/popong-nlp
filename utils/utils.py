@@ -1,6 +1,7 @@
 #! /usr/bin/python3
 # -*- coding: utf-8 -*-
 
+import os
 import re
 import json
 import codecs
@@ -89,3 +90,7 @@ def find_number(s):
 
 def get_words(string):
     return regex.findall(ur'[\p{Hangul}|\p{Latin}|\p{Han}\+', string)
+
+def check_dir(directory):
+    if not os.path.exists(directory):
+        os.makedirs(directory)

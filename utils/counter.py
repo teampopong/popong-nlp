@@ -16,12 +16,12 @@ def prep_korean(doc):
     # TODO: hanja transliteration?
     return re.sub(unichr(int('318d', 16)), ' ', doc)
 
-def get_words(doc, minlen=None):
+def get_words(string, minlen=None):
     #TODO: if not unicode convert to unicode
-    #doc = doc.decode('utf-8')
-    doc = prep_english(doc)
-    doc = prep_korean(doc)
-    words = regex.findall(ur'[\p{Hangul}|\p{Latin}|\p{Han}]+', doc)
+    #string = string.decode('utf-8')
+    string = prep_english(string)
+    string = prep_korean(string)
+    words = regex.findall(ur'[\p{Hangul}|\p{Latin}|\p{Han}]+', string)
     if minlen:
         words = [w for w in words if len(w) >= minlen]
     return words

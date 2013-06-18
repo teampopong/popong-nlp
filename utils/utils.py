@@ -94,3 +94,22 @@ def get_words(string):
 def check_dir(directory):
     if not os.path.exists(directory):
         os.makedirs(directory)
+
+def get_groups(maxlen, itersize):
+    if itersize < maxlen:
+        groups = []
+        for i in range(0, maxlen/itersize):
+            s, e = i*itersize, (i+1)*itersize
+            groups.append([s, e])
+        if e!=maxlen:
+            groups.append([e, maxlen])
+    else:
+        groups = [[0, maxlen]]
+    return groups
+
+def chunk_list(_list, idx):
+    return ' '.join(_list[idx[0]:idx[1]])
+
+def cnt2ratio(cnt, total, minratio=0):
+    ratio = ((c[0], c[1]/float(total)) for c in cnt)
+    return [r for r in ratio if r[1] > minratio]

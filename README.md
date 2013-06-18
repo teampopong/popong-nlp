@@ -1,6 +1,10 @@
 Team POPONG NLP Package
 =======================
 
+<span style="color: red; font-weight: bold;">CAUTION: outdated</span>
+https://github.com/mitsuhiko/flask-babel/blob/master/flaskext/babel.py#L194
+https://gist.github.com/cornchz/228d1fb40649ff5999c1
+TODO: 시,도,군 붙여가며 지역코드 붙는지 확인하기
 
 ## Dependencies
 
@@ -37,7 +41,7 @@ Team POPONG NLP Package
         >>> translit(u'丁新闻', 'cn', 'ko')
         u'\uc815\uc2e0\ubb38'
 
-1. Word count
+1. Word counter
 
         >>> from nlp.utils.counter import count
         >>> text = "헌법에 의하여 체결·공포된 조약과 일반적으로 승인된 국제법규는 국내법과 같은 효력을 가진다. 국가는 법률이 정하는 바에 의하여 재외국민을 보호할 의무를 진다. 대한민국의 국민이 되는 요건은 법률로 정한다. 모든 국민은 직업선택의 자유를 가진다. 대한민국은 국제평화의 유지에 노력하고 침략적 전쟁을 부인한다. 국가는 사회보장·사회복지의 증진에 노력할 의무를 진다.\nLorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy nibh euismod tincidunt ut laoreet dolore magna aliquam erat volutpat. Ut wisi enim ad minim veniam, quis nostrud exerci tation ullamcorper suscipit lobortis nisl ut aliquip ex ea commodo consequat. Duis autem vel eum iriure dolor in hendrerit in vulputate velit esse molestie consequat, vel illum dolore eu feugiat nulla facilisis at vero eros et accumsan et iusto odio dignissim qui blandit praesent luptatum zzril delenit augue duis dolore te feugait nulla facilisi.\n今美令朝徳管層船期済惑約専訓馬著。心太発野姿禁記髄訃就大県育出際銀子。応採聞開続曲左感康著路毎避案。力内倒粒保自訴並殺聴阪職用区者婚順図霊院。止棚側烈掲物小下侵転躍央改原乳。要園今治図社盟討水慎北場素土投。要素区東組月懸法目大真申番稿。美酬募車中装視産解高提都門調革多語。際育馬塁竹週崩汚背念無浩。"
@@ -58,6 +62,18 @@ Team POPONG NLP Package
          ...
          (u'autem', 1)]
 
+1. Korean keyword extractor
+
+        >>> from nlp.extractor import extract
+        >>> with open('some.txt', 'r') as f:
+        ...     k = extract.keywords(f, maxnum=5, minlen=2, mincnt=5, minratio=0.03, groupsize=1000)
+        ...
+        >>> k
+        [(u'\ud558\ub098', 0.0602), (u'\ub450\uc6b8', 0.0323)]
+        >>> string = u'이것은 사랑노래가 노래가 사랑이 아닙니다.'
+        >>> extract.keywords_from_string(string, mincnt=0, minratio=0)
+        [(u'\ub178\ub798', 0.4), (u'\uc0ac\ub791', 0.4), (u'\uc774\uac83', 0.2)]
+
 
 ## Structure
     .
@@ -69,6 +85,9 @@ Team POPONG NLP Package
     ├── babylon/
     │   ├── babylon.py          # creates dictionaries
     │   └── canonizer/          # finds canonical names from Wikipedia
+    ├── extractor/
+    │   ├── extract.py
+    │   └── nouns.r
     ├── structurizer/
     │   ├── district.py
     │   ├── education.py

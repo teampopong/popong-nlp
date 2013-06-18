@@ -7,6 +7,10 @@ import json
 from nlp.utils.counter import get_words, count
 from nlp.utils.utils import cnt2ratio, chunk_list, get_groups
 
+
+currentdir = os.path.dirname(os.path.abspath(__file__))
+
+
 def get_nouns(string):
     #TODO(lucypark): change os.system to popen
     '''
@@ -14,8 +18,8 @@ def get_nouns(string):
     p = Popen(['./nlp/extractor/nouns.r'], stdin=PIPE, stdout=PIPE)
     print p.communicate(' '.join(words).encode('utf-8'))
     '''
-    os.system('echo %s | ./nlp/extractor/nouns.r 2> /dev/null' % string)
-    with open('nouns.txt', 'r') as f:
+    os.system('echo "%s" | %s/nouns.r 2> /dev/null' % (string, currentdir))
+    with open('%s/nouns.txt' % currentdir, 'r') as f:
         nouns = f.read().decode('utf-8').split()
     return nouns
 

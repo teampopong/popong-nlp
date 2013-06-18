@@ -7,7 +7,7 @@ Team POPONG NLP Package
 
 ## Usage
 
-1. Structurizer
+### Structurizer
 
         >>> from nlp.structurizer import structurize
         >>> structurize(u'경기도 부천시원미구을', 'district')
@@ -18,13 +18,13 @@ Team POPONG NLP Package
         >>> markup(u'고려대경영대학원졸', 'education')
         [(u'\uace0\ub824\ub300\ud559\uad50', u'7001504'), (u'\uacbd\uc601\ub300\ud559\uc6d0', None), (u'\uc878\uc5c5', None)]
 
-1. Canonizer
+### Canonizer
 
         >>> from nlp.babylon.canonizer import canonize
         >>> canonize(u'서울대')
         u'\uc11c\uc6b8\ub300\ud559\uad50'
 
-1. Transliterator
+### Transliterator
 
         >>> from nlp.utils.translit import translit
         >>> translit(u'박근혜', 'ko', 'en', 'name')
@@ -36,7 +36,7 @@ Team POPONG NLP Package
         >>> translit(u'丁新闻', 'cn', 'ko')
         u'\uc815\uc2e0\ubb38'
 
-1. Word counter
+### Word counter
 
         >>> from nlp.utils.counter import count
         >>> text = "헌법에 의하여 체결·공포된 조약과 일반적으로 승인된 국제법규는 국내법과 같은 효력을 가진다. 국가는 법률이 정하는 바에 의하여 재외국민을 보호할 의무를 진다. 대한민국의 국민이 되는 요건은 법률로 정한다. 모든 국민은 직업선택의 자유를 가진다. 대한민국은 국제평화의 유지에 노력하고 침략적 전쟁을 부인한다. 국가는 사회보장·사회복지의 증진에 노력할 의무를 진다.\nLorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy nibh euismod tincidunt ut laoreet dolore magna aliquam erat volutpat. Ut wisi enim ad minim veniam, quis nostrud exerci tation ullamcorper suscipit lobortis nisl ut aliquip ex ea commodo consequat. Duis autem vel eum iriure dolor in hendrerit in vulputate velit esse molestie consequat, vel illum dolore eu feugiat nulla facilisis at vero eros et accumsan et iusto odio dignissim qui blandit praesent luptatum zzril delenit augue duis dolore te feugait nulla facilisi.\n今美令朝徳管層船期済惑約専訓馬著。心太発野姿禁記髄訃就大県育出際銀子。応採聞開続曲左感康著路毎避案。力内倒粒保自訴並殺聴阪職用区者婚順図霊院。止棚側烈掲物小下侵転躍央改原乳。要園今治図社盟討水慎北場素土投。要素区東組月懸法目大真申番稿。美酬募車中装視産解高提都門調革多語。際育馬塁竹週崩汚背念無浩。"
@@ -57,7 +57,7 @@ Team POPONG NLP Package
          ...
          (u'autem', 1)]
 
-1. Korean keyword extractor
+### Korean keyword extractor
 
         >>> from nlp.extractor import extract
         >>> with open('some.txt', 'r') as f:

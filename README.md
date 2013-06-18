@@ -1,11 +1,6 @@
 Team POPONG NLP Package
 =======================
 
-<span style="color: red; font-weight: bold;">CAUTION: outdated</span>
-https://github.com/mitsuhiko/flask-babel/blob/master/flaskext/babel.py#L194
-https://gist.github.com/cornchz/228d1fb40649ff5999c1
-TODO: 시,도,군 붙여가며 지역코드 붙는지 확인하기
-
 ## Dependencies
 
     pip install regex unidecode

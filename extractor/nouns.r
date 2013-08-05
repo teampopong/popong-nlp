@@ -2,7 +2,7 @@
 
 library('KoNLP')
 
-setwd('/home/e9t/dev/popong')
+setwd('/home/e9t/dev/popong/nlp/extractor')
 tmp <- file.create('nouns.txt')
 
 f <- file("stdin")

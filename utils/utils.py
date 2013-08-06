@@ -88,9 +88,6 @@ def textify(obj, opt=''):
 def find_number(s):
     return int(re.findall(r'[0-9]+', s)[0])
 
-def get_words(string):
-    return regex.findall(ur'[\p{Hangul}|\p{Latin}|\p{Han}\+', string)
-
 def check_dir(directory):
     if not os.path.exists(directory):
         os.makedirs(directory)

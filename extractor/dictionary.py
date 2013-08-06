@@ -6,7 +6,8 @@ import regex
 from collections import Counter
 from gensim import corpora
 
-from utils import write_json, get_words, chk_dir
+from utils import write_json, chk_dir
+from ..utils.counter import get_words
 
 def make_dictionary(documents, stoplist, dictfile, jsonfile, option='batch'):
 

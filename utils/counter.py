@@ -3,18 +3,28 @@
 
 from collections import Counter
 import re
+
+import nltk
+from nltk.corpus import stopwords
+from nltk.stem.porter import PorterStemmer
 import regex    # http://www.regular-expressions.info/unicode.html
 
 def prep_english(doc):
     # to lower case (그렇다면 약어는 어떻게?)
     doc = doc.lower()
-    # TODO: remove stopwords
     return doc
 
 def prep_korean(doc):
     # TODO: morpheme analysis, spacing
     # TODO: hanja transliteration?
-    return re.sub(unichr(int('318d', 16)), ' ', doc)
+    return re.sub( '[%s|%s]' % (unichr(int('318d', 16)), unichr(int('ff65', 16))), ' ', doc)
+
+def post_english(word):
+    ps = PorterStemmer()
+    stops = stopwords.words('english')
+    word = ps.stem(word) if word not in stops else ''
+    #word = word if nltk.pos_tag(words)[1]=='NN' else ''
+    return word
 
 def get_words(string, minlen=None):
     #TODO: if not unicode convert to unicode
@@ -22,6 +32,7 @@ def get_words(string, minlen=None):
     string = prep_english(string)
     string = prep_korean(string)
     words = regex.findall(ur'[\p{Hangul}|\p{Latin}|\p{Han}]+', string)
+    words = [post_english(word) for word in words]
     if minlen:
         words = [w for w in words if len(w) >= minlen]
     return words

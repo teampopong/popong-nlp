@@ -4,8 +4,8 @@
 import os
 import json
 
-from nlp.utils.counter import get_words, count
-from nlp.utils.utils import cnt2ratio, chunk_list, get_groups
+from ..utils.counter import get_words, count
+from ..utils.utils import cnt2ratio, chunk_list, get_groups
 
 
 currentdir = os.path.dirname(os.path.abspath(__file__))

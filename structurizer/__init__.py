@@ -2,7 +2,6 @@
 # -*- coding: utf-8 -*-
 
 import os
-import sys
 
 from ..utils import encoder
 from .. import settings as s
@@ -19,8 +18,7 @@ def structurize(string, _type):
     elif _type=='education':
         return education.struct(string, CM_EDUCATION)
     else:
-        print 'Warning: Invalid input'
-        sys.exit(2)
+        raise Exception('Invalid input')
 
 def markup(string, _type):
     if _type in ['district','address']:
@@ -28,8 +26,7 @@ def markup(string, _type):
     elif _type=='education':
         return education.markup(string, CM_EDUCATION)
     else:
-        print 'Warning: Invalid input'
-        sys.exit(2)
+        raise Exception('Invalid input')
 
 
 if __name__=='__main__':

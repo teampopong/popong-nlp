@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*-
 
 from __future__ import unicode_literals
-import os, sys
+import os
 import json
 from glob import glob
 from pprint import pprint
@@ -35,8 +35,7 @@ def data_importer(path, opt='test', fieldname='name_kr', source='file'):
         fieldlist = None
 
     else:
-        print 'Warning: Invalid source (file, db)'
-        sys.exit(2)
+        raise Exception('Warning: Invalid source (file, db)')
 
     return fieldlist
 
@@ -59,15 +58,13 @@ def select_files(filenames, opt):
         elif opt == 'presidents':
             filenames = filenames[24:]
         else:
-            print "Warning: Invalid option\
-                    ('all', 'test', 'legistlators', 'mayors', 'presidents')"
-            sys.exit(2)
+            raise Exception("Warning: Invalid option\
+                    ('all', 'test', 'legistlators', 'mayors', 'presidents')")
 
     else:
-        print "Warning: \
+        raise Exception("Warning: \
                 Options should either be an integer in [0,40] or string in\
-                {'all', 'test', 'legistlators', 'mayors', 'presidents'}"
-        sys.exit(2)
+                {'all', 'test', 'legistlators', 'mayors', 'presidents'}")
 
     return filenames
 

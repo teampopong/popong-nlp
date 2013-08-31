@@ -3,7 +3,6 @@
 
 from __future__ import unicode_literals
 import re
-import sys
 import itertools
 from collections import Counter
 
@@ -93,8 +92,7 @@ def markup(string, codemap):
     if len(tokens)==len(encoded):
         marked = zip(tokens, encoded)
     else:
-        print 'This cannot be happening!'
-        sys.exit(2)
+        raise Exception('This cannot be happening!')
 
     unique = get_unique(marked)
     return unique

@@ -2,7 +2,6 @@
 # -*- coding: utf-8 -*-
 
 from __future__ import unicode_literals
-import sys
 import json
 from unidecode import unidecode
 
@@ -43,8 +42,7 @@ def ko2en(string, _type):
     elif _type==None:
         return unidecode(string)
     else:
-        print 'Warning: Unknown type'
-        sys.exit(2)
+        raise Exception('Warning: Unknown type')
 
 def cn2ko(string):
     with open(s.data["HHdic"], 'r') as f:
@@ -57,8 +55,7 @@ def translit(string, _from, _to, _type=None):
     elif _from=='cn' and _to=='ko':
         return cn2ko(string)
     else:
-        print 'Warning: Invalid mapping (ko2en, cn2ko)'
-        sys.exit(2)
+        raise Exception('Warning: Invalid mapping (ko2en, cn2ko)')
 
 if __name__=='__main__':
     print translit('박근혜', 'ko', 'en', 'name')

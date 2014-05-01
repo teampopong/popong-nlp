@@ -1,26 +1,24 @@
 #! /usr/bin/python2.7
 # -*- coding: utf-8 -*-
 
-import os
 import json
+import os
+from subprocess import PIPE, Popen
 
 from ..utils.counter import get_words, count
 from ..utils.utils import cnt2ratio, chunk_list, get_groups
 
 
 currentdir = os.path.dirname(os.path.abspath(__file__))
+rpath = os.path.join(currentdir, 'nouns.r')
 
 
 def get_nouns(string):
-    #TODO(lucypark): change os.system to popen
-    '''
-    from subprocess import PIPE, Popen
-    p = Popen(['./nlp/extractor/nouns.r'], stdin=PIPE, stdout=PIPE)
-    print p.communicate(' '.join(words).encode('utf-8'))
-    '''
-    os.system('echo "%s" | %s/nouns.r 2> /dev/null' % (string, currentdir))
-    with open('%s/nouns.txt' % currentdir, 'r') as f:
-        nouns = f.read().decode('utf-8').split()
+    nouns = []
+    with open(os.devnull, 'w') as DEVNULL:
+        p = Popen([rpath], stdin=PIPE, stdout=PIPE, stderr=DEVNULL)
+        (result, _) = p.communicate(string + '\n')
+        nouns = result.split()
     return nouns
 
 def select(cnt, minlen=0, mincnt=0):

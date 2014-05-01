@@ -3,6 +3,7 @@
 
 from __future__ import unicode_literals
 import json
+import re
 from unidecode import unidecode
 
 from .. import settings as s
@@ -34,6 +35,8 @@ def _party2eng(party):
 def ko2en(string, _type):
     if _type=='name':
         return _name2eng(string)
+    elif _type=='shortname':
+        return shorten(_name2eng(string))
     elif _type=='party':
         return _party2eng(string)
     elif _type=='school':
@@ -48,6 +51,10 @@ def cn2ko(string):
     with open(s.data["HHdic"], 'r') as f:
         dic = json.load(f)
     return ''.join(dic.get(char) for char in string)
+
+def shorten(name_en):
+    s = re.split('[,-]', name_en)
+    return '%s, %s' % (s[0], ''.join(t.strip()[0] for t in s[1:]))
 
 def translit(string, _from, _to, _type=None):
     if _from=='ko'and _to=='en':

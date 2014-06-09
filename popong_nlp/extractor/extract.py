@@ -30,10 +30,14 @@ def select(cnt, minlen=0, mincnt=0):
 def keywords_from_string(string, h,\
         maxnum=5, minlen=2, mincnt=5, minratio=0.01, groupsize=1000):
 
+    # FIXME: generalize this hotfix for empty files w/ mostly line carriages
+    if len(string) < 1000:
+        return []
+
     words = get_words(string, minlen)
-    nouns = h.nouns('\r'.join(\
-                chunk_list(words, idx)\
-                for idx in get_groups(len(words), groupsize)))
+    group = [chunk_list(words, idx) for idx in get_groups(len(words), groupsize)]
+    # FIXME: enhance hannanum to handle input arrays of size > 10000
+    nouns = h.nouns('\r'.join(group)[:10000])
     nouns = remove_stopwords(nouns)
     cnt = count(nouns)
     selected = select(cnt, minlen, mincnt)

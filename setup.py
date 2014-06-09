@@ -21,6 +21,7 @@ setup(name='popong_nlp',
       package_data={'popong_nlp': [
           'data/dict/*.json',
           'data/codebooks/*.csv',
+          'data/corpus/*.txt',
       ]},
       install_requires=[
           'regex>=2014.02.19',

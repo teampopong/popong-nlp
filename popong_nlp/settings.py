@@ -14,7 +14,8 @@ def get_path(f):
 data = {
     "dict"      : get_path("dict"),
     "HHdic"     : get_path("dict/hanja-hangul.json"),
-    "lastnames" : get_path("dict/lastnames.json")
+    "lastnames" : get_path("dict/lastnames.json"),
+    "stopwords_ko" : get_path("corpus/stopwords-ko.txt")
 }
 
 codebook = {

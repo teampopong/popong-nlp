@@ -9,10 +9,19 @@ import konlpy
 from ..utils.counter import get_words, count
 from ..utils.utils import cnt2ratio, chunk_list, get_groups
 
+from .. import settings as s
+
 
 currentdir = os.path.dirname(os.path.abspath(__file__))
 rpath = os.path.join(currentdir, 'nouns.r')
 
+with open(s.data['stopwords_ko'], 'r') as f:
+    stops_ko = filter(None, f.read().decode('utf-8').split('\n'))
+
+def remove_stopwords(nouns):
+    for s in stops_ko:
+        nouns = filter(lambda n: n!=s, nouns)
+    return nouns
 
 def select(cnt, minlen=0, mincnt=0):
     lengthy = (c for c in cnt if len(c[0])>=minlen)
@@ -25,6 +34,7 @@ def keywords_from_string(string, h,\
     nouns = h.nouns('\r'.join(\
                 chunk_list(words, idx)\
                 for idx in get_groups(len(words), groupsize)))
+    nouns = remove_stopwords(nouns)
     cnt = count(nouns)
     selected = select(cnt, minlen, mincnt)
     ratio = cnt2ratio(selected, len(nouns), minratio)

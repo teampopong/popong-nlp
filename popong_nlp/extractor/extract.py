@@ -28,7 +28,7 @@ def select(cnt, minlen=0, mincnt=0):
     return [l for l in lengthy if l[1]>mincnt]
 
 def keywords_from_string(string, h,\
-        maxnum=5, minlen=2, mincnt=5, minratio=0.01, groupsize=1000):
+        maxnum=5, minlen=2, mincnt=5, minratio=0.03, groupsize=1000):
 
     # FIXME: generalize this hotfix for empty files w/ mostly line carriages
     if len(string) < 1000:
@@ -49,7 +49,7 @@ def keywords_from_string(string, h,\
     return ratio
 
 def keywords(f, h,\
-        maxnum=5, minlen=2, mincnt=5, minratio=0.01, groupsize=1000):
+        maxnum=5, minlen=2, mincnt=5, minratio=0.03, groupsize=1000):
     # h: KoNLPy Hannanum instance
 
     return keywords_from_string(f.read().decode('utf-8'), h,\

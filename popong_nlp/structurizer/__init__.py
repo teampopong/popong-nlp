@@ -5,8 +5,8 @@ import os
 
 from ..utils import encoder
 from .. import settings as s
-from . import district
-from . import education
+import district
+import education
 
 parentdir = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 CM_REGION = encoder.get_codemap('region')

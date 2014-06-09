@@ -1,7 +1,6 @@
 *.pyc
 .DS_Store
 *.Rhistory
-
-_input
-_output
-_test
+build/
+dist/
+popong_nlp.egg-info/

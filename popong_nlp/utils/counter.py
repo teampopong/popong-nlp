@@ -26,6 +26,11 @@ def post_english(word):
     #word = word if nltk.pos_tag(words)[1]=='NN' else ''
     return word
 
+def post_korean(word):
+    #TODO: move to separate file
+    stops_ko = [u'조의', u'조제']
+    return word if word not in stops_ko else ''
+
 def get_words(string, minlen=None):
     #TODO: if not unicode convert to unicode
     #string = string.decode('utf-8')
@@ -33,6 +38,7 @@ def get_words(string, minlen=None):
     string = prep_korean(string)
     words = regex.findall(ur'[\p{Hangul}|\p{Latin}|\p{Han}]+', string)
     words = [post_english(word) for word in words]
+    words = [post_korean(word) for word in words]
     if minlen:
         words = [w for w in words if len(w) >= minlen]
     return words

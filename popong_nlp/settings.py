@@ -6,7 +6,7 @@ import os.path
 from .utils import utils
 
 def get_path(f):
-    return os.path.join(os.path.dirname(__file__), f)
+    return os.path.join(os.path.dirname(__file__), 'data', f)
 
 
 # Settings -----------------------------------------

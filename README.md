@@ -109,3 +109,11 @@ Finds canonical names of entities using Wikipedia.
         ├── importer.py         # retrieves each attribute for officials
         ├── translit.py
         └── utils.py
+
+
+## Author
+[Lucy Park](http://github.com/e9t)
+
+## License
+
+[Apache v2.0](http://www.apache.org/licenses/LICENSE-2.0.html)

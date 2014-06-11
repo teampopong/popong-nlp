@@ -2,8 +2,6 @@ Team POPONG NLP Package
 =======================
 
 - **Pull requests are always welcome.**
-- <span style="color: red; font-weight: bold;">CAUTION: README outdated</span>
-- TODO: 시,도,군 붙여가며 지역코드 붙는지 확인하기
 
 ## Requirements
 

@@ -2,6 +2,7 @@
 # -*- coding: utf-8 -*-
 
 import json
+import logging
 import os
 
 import konlpy
@@ -32,6 +33,7 @@ def keywords_from_string(string, h,\
 
     # FIXME: generalize this hotfix for empty files w/ mostly line carriages
     if len(string) < 1000:
+        logging.warning("Number of characters in text must exceed 1000")
         return []
 
     words = get_words(string, minlen)

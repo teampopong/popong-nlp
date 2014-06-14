@@ -79,6 +79,11 @@ Finds canonical names of entities using Wikipedia.
     ...
     >>> k
     [(u'\ud558\ub098', 0.0602), (u'\ub450\uc6b8', 0.0323)]
+    >>> string = u'이것은 사랑노래가 노래가 사랑이 아닙니다.'
+    >>> j = extract.keywords_from_string(string, h, mincnt=0, minratio=0)
+    WARNING:root:Number of characters in text must exceed 1000
+    >>> j
+    []
 
 
 ## Structure

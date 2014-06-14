@@ -2,8 +2,6 @@ Team POPONG NLP Package
 =======================
 
 - **Pull requests are always welcome.**
-- <span style="color: red; font-weight: bold;">CAUTION: README outdated</span>
-- TODO: 시,도,군 붙여가며 지역코드 붙는지 확인하기
 
 ## Requirements
 
@@ -11,7 +9,7 @@ Team POPONG NLP Package
 
 ## Install
 
-    # pip install git+https://github.com/e9t/konlpy.git
+    # pip install git+https://github.com/teampopong/popong-nlp.git
 
 or
 
@@ -111,3 +109,11 @@ Finds canonical names of entities using Wikipedia.
         ├── importer.py         # retrieves each attribute for officials
         ├── translit.py
         └── utils.py
+
+
+## Author
+[Lucy Park](http://github.com/e9t)
+
+## License
+
+[Apache v2.0](http://www.apache.org/licenses/LICENSE-2.0.html)

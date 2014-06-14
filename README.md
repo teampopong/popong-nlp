@@ -9,7 +9,7 @@ Team POPONG NLP Package
 
 ## Install
 
-    # pip install git+https://github.com/teampopong/popong-nlp.gi
+    # pip install git+https://github.com/teampopong/popong-nlp.git
 
 or
 

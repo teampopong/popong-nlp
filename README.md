@@ -74,14 +74,11 @@ Finds canonical names of entities using Wikipedia.
     >>> import konlpy
     >>> h = konlpy.Hannanum()
     >>> from popong_nlp.extractor import extract
-    >>> with open('some.txt', 'r') as f:
-    ...     k = extract.keywords(f, h, maxnum=5, minlen=2, mincnt=5, minratio=0.01, g1oupsize=1000)
+    >>> with open('some.txt', 'r') as f:    # Number of characters in text should exceed 1000
+    ...     k = extract.keywords(f, h, maxnum=5, minlen=2, mincnt=5, minratio=0.01, groupsize=1000)
     ...
     >>> k
     [(u'\ud558\ub098', 0.0602), (u'\ub450\uc6b8', 0.0323)]
-    >>> string = u'이것은 사랑노래가 노래가 사랑이 아닙니다.'
-    >>> extract.keywords_from_string(string, h, mincnt=0, minratio=0)
-    [(u'\ub178\ub798', 0.4), (u'\uc0ac\ub791', 0.4), (u'\uc774\uac83', 0.2)]
 
 
 ## Structure

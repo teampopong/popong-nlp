@@ -1,7 +1,7 @@
 #! /usr/bin/python2.7
 # -*- coding: utf-8 -*-
 
-from setuptools import setup
+from setuptools import find_packages, setup
 
 setup(name='popong_nlp',
       version='0.1',
@@ -10,14 +10,7 @@ setup(name='popong_nlp',
       author='Team POPONG',
       author_email='contact@popong.com',
       license='Apache 2.0',
-      packages=[
-          'popong_nlp',
-          'popong_nlp/babylon',
-          'popong_nlp/babylon/canonizer',
-          'popong_nlp/extractor',
-          'popong_nlp/structurizer',
-          'popong_nlp/utils',
-      ],
+      packages=find_packages(),
       package_data={'popong_nlp': [
           'data/dict/*.json',
           'data/codebooks/*.csv',

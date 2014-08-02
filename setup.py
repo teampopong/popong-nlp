@@ -1,11 +1,22 @@
 #! /usr/bin/python2.7
 # -*- coding: utf-8 -*-
+from __future__ import with_statement
 
 from setuptools import find_packages, setup
+
+
+def readme():
+    try:
+        with open('README.rst') as f:
+            return f.read()
+    except (IOError, OSError):
+        pass
+
 
 setup(name='popong_nlp',
       version='0.1',
       description='Team POPONG NLP package',
+      long_description=readme(),
       url='http://github.com/teampopong/popong-nlp',
       author='Team POPONG',
       author_email='contact@popong.com',

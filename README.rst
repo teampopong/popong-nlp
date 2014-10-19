@@ -16,6 +16,12 @@ Install
 
 .. code-block:: console
 
+   $ pip install popong-nlp
+
+or
+
+.. code-block:: console
+
    $ pip install git+https://github.com/teampopong/popong-nlp.git
 
 or

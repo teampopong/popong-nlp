@@ -30,5 +30,4 @@ setup(name='popong_nlp',
       install_requires=[
           'regex>=2014.02.19',
           'Unidecode>=0.04.14',
-      ],
-      zip_safe=False)
+      ])

@@ -6,8 +6,6 @@ import re
 import itertools
 from collections import Counter
 
-import pandas as pd
-
 from .. import settings as s
 from ..utils import utils
 from . import base

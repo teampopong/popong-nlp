@@ -28,6 +28,7 @@ setup(name='popong_nlp',
           'data/corpus/*.txt',
       ]},
       install_requires=[
+          'pandas>=0.15.1',
           'regex>=2014.02.19',
           'Unidecode>=0.04.14',
       ])

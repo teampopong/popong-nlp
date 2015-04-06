@@ -14,23 +14,11 @@ Requirements
 Install
 -------
 
-.. code-block:: console
-
-   $ pip install popong-nlp
-
-or
-
-.. code-block:: console
-
-   $ pip install git+https://github.com/teampopong/popong-nlp.git
-
-or
-
-.. code-block:: console
-
    $ git clone git@github.com:teampopong/popong-nlp.git
    $ cd popong-nlp
-   # python setup.py install
+   $ git submodule init
+   $ git submodule update
+   $ python setup.py install
 
 Usage
 -----

@@ -14,11 +14,10 @@ Requirements
 Install
 -------
 
-   $ git clone git@github.com:teampopong/popong-nlp.git
-   $ cd popong-nlp
-   $ git submodule init
-   $ git submodule update
-   $ python setup.py install
+.. code:: bash
+
+    pip install git+https://github.com/teampopong/popong-nlp.git
+
 
 Usage
 -----

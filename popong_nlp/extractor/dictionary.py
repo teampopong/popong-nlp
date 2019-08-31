@@ -19,7 +19,7 @@ def make_dictionary(documents, stoplist, dictfile, jsonfile, option='batch'):
         dictionary = corpora.Dictionary(texts)
 
     elif option=='online':
-        words = [[word for word in regex.findall(ur'[\p{Hangul}|\p{Latin}|\p{Han}]+', doc.lower()) if len(word)>1] for doc in documents]
+        words = [[word for word in regex.findall(r'[\p{Hangul}|\p{Latin}|\p{Han}]+', doc.lower()) if len(word)>1] for doc in documents]
         dictionary = corpora.Dictionary(words)
 
         stop_ids = [dictionary.token2id[stopword] for stopword in stoplist

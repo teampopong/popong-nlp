@@ -33,7 +33,7 @@ def get_words(string, minlen=None):
     #string = string.decode('utf-8')
     string = prep_english(string)
     string = prep_korean(string)
-    words = regex.findall(ur'[\p{Hangul}|\p{Latin}|\p{Han}]+', string)
+    words = regex.findall(r'[\p{Hangul}|\p{Latin}|\p{Han}]+', string)
     words = [post_english(word) for word in words]
     if minlen:
         words = [w for w in words if len(w) >= minlen]

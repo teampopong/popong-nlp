@@ -19,7 +19,7 @@ def startsplitter(line, starts):
     return line
 
 def wordify(line):
-    return regex.findall(ur'[\p{Hangul}|\p{Latin}|\p{Number}]+', line)
+    return regex.findall(r'[\p{Hangul}|\p{Latin}|\p{Number}]+', line)
 
 def eraser(words, stopwords):
 

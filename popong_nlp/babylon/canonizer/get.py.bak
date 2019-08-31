@@ -1,14 +1,12 @@
 #! /usr/bin/python2.7
 # -*- coding: utf-8 -*-
 
-from future import standard_library
-standard_library.install_aliases()
-import urllib.request, urllib.error, urllib.parse, html5lib
+import urllib2, html5lib
 
 def htmltree(url):
-    r = urllib.request.Request(url)
+    r = urllib2.Request(url)
     r.add_header("User-Agent", "Mozilla/5.0")
-    f = urllib.request.urlopen(r)
+    f = urllib2.urlopen(r)
     return f
 
 def webpage(f):

@@ -1,9 +1,6 @@
 #! /usr/bin/python3
 # -*- coding: utf-8 -*-
 
-from __future__ import division
-from builtins import range
-from past.utils import old_div
 import os
 import re
 import json
@@ -81,7 +78,7 @@ def textify(obj, opt=''):
         if opt=='stag':
             return '<s> ' + ' </s>\n<s> '.join(obj) + ' </s>'
         elif opt=='filter':
-            obj = [_f for _f in obj if _f]
+            obj = filter(None, obj)
             return '\n'.join(obj)
         else:
             return '\n'.join(obj)
@@ -98,7 +95,7 @@ def check_dir(directory):
 def get_groups(maxlen, itersize):
     if itersize < maxlen:
         groups = []
-        for i in range(0, old_div(maxlen,itersize)):
+        for i in range(0, maxlen/itersize):
             s, e = i*itersize, (i+1)*itersize
             groups.append([s, e])
         if e!=maxlen:

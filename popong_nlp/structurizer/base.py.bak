@@ -28,4 +28,4 @@ def eraser(words, stopwords):
             word = ''
         return word
 
-    return [_f for _f in (erase(word) for word in words) if _f]
+    return filter(None, (erase(word) for word in words))

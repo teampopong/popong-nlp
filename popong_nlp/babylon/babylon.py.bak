@@ -2,18 +2,13 @@
 # -*- coding: utf-8 -*-
 
 from __future__ import unicode_literals
-from __future__ import print_function
-from __future__ import absolute_import
-from future import standard_library
-standard_library.install_aliases()
-from builtins import str
 import sys, json
-from urllib.error import HTTPError
+from urllib2 import HTTPError
 import gevent
 #FIXME(lucypark): Exception KeyError (http://stackoverflow.com/questions/8774958)
 from gevent.monkey import patch_all; patch_all(thread=False)
 
-from .canonizer.wikipedia import canonical_name
+from canonizer.wikipedia import canonical_name
 from ..utils import utils
 from .. import settings as s
 
@@ -26,7 +21,7 @@ def build_alias_dict(fieldname, doc):
 
 def get_terms(doc):
    terms = list(set(doc.split()))
-   sys.stdout.write('n(terms)\t: '); print(len(terms))
+   sys.stdout.write('n(terms)\t: '); print len(terms)
    return terms
 
 def get_aliases(terms):
@@ -49,9 +44,9 @@ def hashing(word, terms, dic, i):
         selected = select(canon, terms)
         if selected not in [None, word]:
             dic[word] = selected
-        print('%s\t%s\t: %s, %s' % (str(i), word, canon, selected))
+        print '%s\t%s\t: %s, %s' % (str(i), word, canon, selected)
     except:
-        print('%s\t%s\t: pass' % (str(i), word))
+        print '%s\t%s\t: pass' % (str(i), word)
 
 def select(alias, terms):
 
@@ -72,16 +67,16 @@ def select(alias, terms):
 def write_terms(fieldname, terms):
     f = '%s/terms-%s.txt' % (s.data["dict"], fieldname)
     utils.write_text('\n'.join(terms), f)
-    print('Terms written to ' + f)
+    print 'Terms written to ' + f
 
 def write_aliases(fieldname, aliases):
     f = '%s/aliases-%s.json' % (s.data["dict"], fieldname)
     utils.write_json(f, aliases)
-    print('Aliases written to ' + f)
+    print 'Aliases written to ' + f
 
 
 if __name__ == '__main__':
-    print("Good")
+    print "Good"
     # etime - stime, "seconds"
     # education 전체로 돌렸을 때 9083 sec
     # party 전체로 돌렸을 때 82 sec

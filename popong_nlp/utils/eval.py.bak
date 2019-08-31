@@ -2,12 +2,10 @@
 # -*- coding: utf-8 -*-
 
 from __future__ import unicode_literals
-from __future__ import print_function
-from __future__ import absolute_import
 import json
 
 from pprint import pprint 
-from . import utils
+import utils
 
     
 def oov_rate(words, entries):
@@ -42,6 +40,6 @@ if __name__ == '__main__':
     with open(DIC, 'r') as f:
         dic = json.load(f)
 
-    oovr = oov_rate(words, list(dic.values()))
-    print(oovr)
+    oovr = oov_rate(words, dic.values())
+    print oovr
     #p = perplexity()

@@ -1,9 +1,7 @@
 #! /usr/bin/python3
 # -*- coding: utf-8 -*-
 
-from future import standard_library
-standard_library.install_aliases()
-import urllib.request, urllib.error, urllib.parse
+import urllib2
 
 from . import get
 from ... import settings as s
@@ -25,7 +23,7 @@ def branch(query):
 '''
 
 def canonical_name(query):
-    url = WIKI_URL + urllib.parse.quote(query)
+    url = WIKI_URL + urllib2.quote(query)
     tree = get.htmltree(url)
     page = get.webpage(tree)
     canon = get_canonical_name(page)

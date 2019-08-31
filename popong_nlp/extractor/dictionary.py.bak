@@ -24,7 +24,7 @@ def make_dictionary(documents, stoplist, dictfile, jsonfile, option='batch'):
 
         stop_ids = [dictionary.token2id[stopword] for stopword in stoplist
                 if stopword in dictionary.token2id]
-        once_ids = [tokenid for tokenid, docfreq in list(dictionary.dfs.items())\
+        once_ids = [tokenid for tokenid, docfreq in dictionary.dfs.items()\
                 if docfreq==1]
 
         dictionary.filter_tokens(stop_ids + once_ids)

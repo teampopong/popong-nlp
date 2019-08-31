@@ -1,9 +1,6 @@
 #! /usr/bin/python3
 # -*- coding: utf=8 -*-
 
-from __future__ import print_function
-from builtins import zip
-from builtins import range
 from ..utils import utils
 from .. import settings as s
 from . import base
@@ -13,7 +10,7 @@ ENDS = s.education['statuses']
 STOPWORDS = s.education['stopwords']
 ABBREVS = s.education['abbrevs']
 ALIASES = s.education['aliases']
-TERMS = list(ALIASES.keys()) + list(ALIASES.values())
+TERMS = ALIASES.keys() + ALIASES.values()
 for i in s.education['to_ignore']: TERMS.remove(i)
 
 def reverse_pop(word):
@@ -55,7 +52,7 @@ def convert(line):
     return ' '.join(canonized)
 
 def struct(string, codemap):
-    print('tba')
+    print 'tba'
 
 def markup(string, codemap):
 
@@ -72,4 +69,4 @@ def markup(string, codemap):
 
     tokens = final.split()
     encoded = (encode(token) for token in tokens)
-    return list(zip(tokens, encoded))
+    return zip(tokens, encoded)

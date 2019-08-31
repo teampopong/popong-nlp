@@ -17,11 +17,11 @@ currentdir = os.path.dirname(os.path.abspath(__file__))
 rpath = os.path.join(currentdir, 'nouns.r')
 
 with open(s.data['stopwords_ko'], 'r') as f:
-    stops_ko = [_f for _f in f.read().decode('utf-8').split('\n') if _f]
+    stops_ko = filter(None, f.read().decode('utf-8').split('\n'))
 
 def remove_stopwords(nouns):
     for s in stops_ko:
-        nouns = [n for n in nouns if n!=s]
+        nouns = filter(lambda n: n!=s, nouns)
     return nouns
 
 def select(cnt, minlen=0, mincnt=0):

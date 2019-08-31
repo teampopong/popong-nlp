@@ -2,9 +2,6 @@
 # -*- coding: utf-8 -*-
 
 from __future__ import unicode_literals
-from builtins import str
-from builtins import zip
-from builtins import range
 import re
 import itertools
 from collections import Counter
@@ -75,7 +72,7 @@ def encoder(line, codemap):
     return encoded
 
 def codepick(codes):
-    codes = [_f for _f in codes if _f]
+    codes = filter(None, codes)
     maxlen = max(len(c) for c in codes)
     return [str(c) for c in codes if len(c)==maxlen]
 
@@ -91,7 +88,7 @@ def markup(string, codemap):
 
     tokens = spaced.split()
     if len(tokens)==len(encoded):
-        marked = list(zip(tokens, encoded))
+        marked = zip(tokens, encoded)
     else:
         raise Exception('This cannot be happening!')
 
